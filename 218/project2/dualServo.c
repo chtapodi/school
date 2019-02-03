@@ -19,11 +19,15 @@
 
 uint16_t pulseWidth;
 uint8_t pMinP=117;
-uint8_t pMaxP=352;
+uint16_t pMaxP=352;
 uint8_t pMinC=203;
 uint16_t pMaxC=266;
 uint16_t period=3120;
 char * toDisplay;
+
+//to allow dynamic association between servo positions.
+uint8_t minVal;
+uint8_t maxVal;
 
 
 
@@ -64,6 +68,13 @@ void _ISR _T2Interrupt(void) { //The function that is called on the timer2 inter
 
 uint8_t getServoPos() {
     //get and convert potentiometer val
+    float posVal = convertADC1(); //max val of 1024
+    posVal=posVal/1024.0;
+    
+    uint8_t diff=maxVal-minVal;
+    
+    return (int)(posVal*diff + minVal);
+
 }
 
 void switchServo(uint8_t val) {
@@ -86,9 +97,12 @@ int main ( void )  //main function that....
     configTimer2();
     configControlLCD();
     initLCD(); //initialize the hitachi lcd
+    
+    CONFIG_RA0_AS_ANALOG(); //sets up potentiometer
+    configADC1_ManualCH0(RA0_AN, 31, 0); //sets range
 
     
-    TRISA=0x0000; //sets all A to output
+    TRISA=0x0000; //sets all A to output MUST RE_EVALUATE
     
     
     _T2IE=1; //Enables interupts
@@ -104,9 +118,13 @@ int main ( void )  //main function that....
         if (swtch==1) { //continuous
             //set to Continuous pin
             toDisplay="Continuous  ";//sets the correct string to display
+            minVal=pMinC;
+            maxVal=pMaxC;
         }
         else {
             toDisplay="Positional  "; //sets the correct string to display
+            minVal=pMinP;
+            maxVal=pMaxP;
         }
         writeLCD(0x80, 0, 1, 1);//resets the courser
         outStringLCD(toDisplay); //displays the string
