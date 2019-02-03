@@ -13,16 +13,16 @@
 
 // #defines for handy constants 
 #define LED (_LATA0)  // LED on microstick, RA0 (pin 2)
-#define swtch (_RA1) //Defines switch to pin 6
+#define swtch (_RB2) //Defines switch to pin 6
 
 /*********** GLOBAL VARIABLE AND FUNCTION DEFINITIONS *******/
 
 uint16_t pulseWidth;
-uint8_t pMinP=117;
+uint8_t pMinP=120;
 uint16_t pMaxP=352;
-uint8_t pMinC=203;
+uint8_t pMinC=120;
 uint16_t pMaxC=266;
-uint16_t period=3120;
+uint16_t period=3105;
 char * toDisplay;
 
 //to allow dynamic association between servo positions.
@@ -47,7 +47,7 @@ void configTimer2(void) { //Runs the configuration for timer2
 void configOC1(void) { //Configuration for PWM
     T2CON=0x0030;
     
-    CONFIG_OC1_TO_RP(RB1_RP);
+    CONFIG_OC1_TO_RP(RB11_RP);
     OC1RS=0x0000;
     OC1R=0x0000;
     OC1CON=0x0006; //sets up the control for PWM on clock2
@@ -100,7 +100,7 @@ int main ( void )  //main function that....
     
     
     TRISA=0x0000; //sets all A to output MUST RE_EVALUATE
-    _TRISA1=1;
+    CONFIG_RB2_AS_DIG_INPUT();
     CONFIG_RA0_AS_ANALOG(); //sets up potentiometer
 
     configADC1_ManualCH0(RA0_AN, 31, 0); //sets range
@@ -130,6 +130,7 @@ int main ( void )  //main function that....
             minVal=pMinP;
             maxVal=pMaxP;
         }
+        char array[50];
         writeLCD(0x80, 0, 1, 1);//resets the courser
         outStringLCD(toDisplay); //displays the string
 
