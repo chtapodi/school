@@ -22,7 +22,7 @@ uint8_t pMinP=120;
 uint16_t pMaxP=352;
 uint8_t pMinC=120;
 uint16_t pMaxC=266;
-uint16_t period=3105;
+uint16_t period=3125;
 char * toDisplay;
 
 //to allow dynamic association between servo positions.
@@ -36,7 +36,7 @@ uint8_t maxVal;
 
 void configTimer2(void) { //Runs the configuration for timer2
     
-    T2CON=0x0030;
+    T2CON=0x0030; //turn t2 off
     //PR2 = msToU16Ticks(250, getTimerPrescale(T2CONbits)) - 1;
     PR2=  period;//0x98BC; //the delay to make PR2 .25seconds 
     _T2IF=0;
@@ -44,42 +44,64 @@ void configTimer2(void) { //Runs the configuration for timer2
    
 }
  
-void configOC1(void) { //Configuration for PWM
+void updateServo(void ) {
+
+}
+
+void configOC() { //Configuration for PWM
     T2CON=0x0030;
     
+    
+
     CONFIG_OC1_TO_RP(RB11_RP);
+
+    CONFIG_OC2_TO_RP(RB12_RP);
+
     OC1RS=0x0000;
     OC1R=0x0000;
-    OC1CON=0x0006; //sets up the control for PWM on clock2
+    OC1CON=0x0006; //sets up the control for PWM on clock1
+    
+    OC2RS=0x0000;
+    OC2R=0x0000;
+    OC2CON=0x0006; //sets up the control for PWM on clock2
 }
 
 
 
 void _ISR _T2Interrupt(void) { //The function that is called on the timer2 interupt
 
+    if (swtch) { //continous
     OC1RS=pulseWidth;
+    }
+    else {
+        OC2RS=pulseWidth;
+    }
     
     
-    _T2IF=0;
+    _T2IF=0; //resets the timer
     
     
 }
 
 
-uint8_t getServoPos() {
+uint16_t getServoPos(void) {
     //get and convert potentiometer val
-    float posVal = convertADC1(); //max val of 1024
-    posVal=posVal/1024.0;
+    //float posVal = convertADC1(); //max val of 1024
+    float posVal=convertADC1()/1025.0;
+    float diff;
+    if(swtch) {
+        diff=146;
+    }
+    else {
+        diff=230;
+    }
     
-    uint8_t diff=maxVal-minVal;
-    
-    return (int)(posVal*diff + minVal);
 
+    
+    return posVal*diff +120;
 }
 
-void switchServo(uint8_t val) {
-    //switches servo according to val.
-}
+
 
 
 
@@ -93,7 +115,7 @@ int main ( void )  //main function that....
 
 /* Call configuration routines */
 	configClock();  //Sets the clock to 40MHz using FRC and PLL
-    configOC1(); 
+    configOC(); 
     configTimer2();
     configControlLCD();
     initLCD(); //initialize the hitachi lcd
@@ -103,7 +125,7 @@ int main ( void )  //main function that....
     CONFIG_RB2_AS_DIG_INPUT();
     CONFIG_RA0_AS_ANALOG(); //sets up potentiometer
 
-    configADC1_ManualCH0(RA0_AN, 31, 0); //sets range
+    configADC1_ManualCH0(RA0_AN, 1, 0); //sets range
 
     
     
@@ -118,24 +140,25 @@ int main ( void )  //main function that....
 /* Main program loop */
     
 	while (1) {	
-        switchServo(swtch); //changes switch accordingly
-        if (swtch==1) { //continuous
+
+        if (swtch) { //continuous
             //set to Continuous pin
             toDisplay="Continuous  ";//sets the correct string to display
-            minVal=pMinC;
-            maxVal=pMaxC;
+
         }
         else {
             toDisplay="Positional  "; //sets the correct string to display
-            minVal=pMinP;
-            maxVal=pMaxP;
+
         }
         char array[50];
         writeLCD(0x80, 0, 1, 1);//resets the courser
-        outStringLCD(toDisplay); //displays the string
+        
+        char str[100];
+        sprintf(str, "%d", getServoPos());
+
+        outStringLCD(str); //displays the string
 
         pulseWidth=getServoPos(); //calculates the correct value for the pulsewidth
-        //DELAY_MS(50); //Waits 50ms
         
     }
         
