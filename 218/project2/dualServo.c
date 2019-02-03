@@ -13,7 +13,7 @@
 
 // #defines for handy constants 
 #define LED (_LATA0)  // LED on microstick, RA0 (pin 2)
-#define swtch (_RB2) //Defines switch to pin 6
+#define swtch (_RA1) //Defines switch to pin 6
 
 /*********** GLOBAL VARIABLE AND FUNCTION DEFINITIONS *******/
 
@@ -98,11 +98,15 @@ int main ( void )  //main function that....
     configControlLCD();
     initLCD(); //initialize the hitachi lcd
     
+    
+    TRISA=0x0000; //sets all A to output MUST RE_EVALUATE
+    _TRISA1=1;
     CONFIG_RA0_AS_ANALOG(); //sets up potentiometer
+
     configADC1_ManualCH0(RA0_AN, 31, 0); //sets range
 
     
-    TRISA=0x0000; //sets all A to output MUST RE_EVALUATE
+    
     
     
     _T2IE=1; //Enables interupts
@@ -130,7 +134,7 @@ int main ( void )  //main function that....
         outStringLCD(toDisplay); //displays the string
 
         pulseWidth=getServoPos(); //calculates the correct value for the pulsewidth
-        DELAY_MS(50); //Waits 50ms
+        //DELAY_MS(50); //Waits 50ms
         
     }
         
