@@ -1,0 +1,4 @@
+Unfortunately my code for this project is extremely messy.
+The two important files are full_room.py and localized_classification.py, but I have included a large number of other files, many of which do not work, in the background folder. Many of these are results of other experiments that ended up not having conclusive enough results for me to write about, and therefore do not work in their current state. I have included them only so you can see the breadth of the other work.
+
+Unfortunately this is only necessary because I organized my entire project poorly, and due to this same reason, there is a lot of code in the two main files that is vestigial. I hope this is not an issue, as it does run, and it is simple enough to determine what is being run and what is not, but I do feel like the background code adds information to the breadth of the work.
