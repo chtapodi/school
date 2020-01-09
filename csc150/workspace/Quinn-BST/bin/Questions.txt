@@ -1,0 +1,11 @@
+I used a linkedList that I had already written
+This linkedList has code to insert the data at any point
+but I only inserted it at the front.
+I chose this because it has both the advantage of
+rapid insertion and rapid removal, and good memory usage.
+
+Even with the implementation of the sequencial page printing,
+it only goes over the values once, which keeps the printing at
+O(n) where n is the number of pages to print.
+This would be the same for an array, but this has the additional benifit 
+of better memory usage.

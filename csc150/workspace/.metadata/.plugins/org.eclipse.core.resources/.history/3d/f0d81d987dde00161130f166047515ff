@@ -1,0 +1,64 @@
+/**
+ * Creates and manipulate three dimensional blocks with xyz dimentions
+ * and xy position
+ * @author Xavier
+ *
+ */
+
+
+
+public class Blocks {
+	
+	
+	//Constant xyz value
+	final int DEFAULT_BLOCK_XYZ = 50;
+	final int DEFAULT_BLOCK_POSX = 100;
+	final int DEFAULT_BLOCK_POSY = 100;
+	
+	//Instance Variables
+	private int xsize;
+	private int ysize;
+	private int zsize;
+	private int xpos;
+	private int ypos;
+	
+	
+	//default constructor
+	public Block(){
+		xsize = DEFAULT_BLOCK_XYZ;
+		ysize = DEFAULT_BLOCK_XYZ;
+		zsize = DEFAULT_BLOCK_XYZ;
+		xpos = DEFAULT_BLOCK_POSX;
+		ypos = DEFAULT_BLOCK_POSY;
+	}
+	
+	public Block(int setxpos, int setypos) {
+		xsize = DEFAULT_BLOCK_XYZ;
+		ysize = DEFAULT_BLOCK_XYZ;
+		zsize = DEFAULT_BLOCK_XYZ;
+		xpos = setxpos;
+		ypos = setypos;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * What this does
+	 * @param inputs and what it is
+	 */
+	
+	
+	
+	
+	/**
+	 * @return What it returns
+	 */
+
+}

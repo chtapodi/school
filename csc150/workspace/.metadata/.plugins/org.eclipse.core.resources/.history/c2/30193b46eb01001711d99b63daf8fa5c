@@ -1,0 +1,52 @@
+/**
+ * A node for a Binary Search Tree
+ * @author xavier
+ */
+public class BSTNode<E extends Comparable<E>>
+{
+    public E key;
+    public BSTNode lLink;  
+    public BSTNode rLink;
+    private LinkedList pages;
+    private final int MAX_PAGES=5;
+    
+    /** Non-default constructor
+     * 
+     * @param input is whatever data you want stored in the node.
+     */
+    public BSTNode(E input)
+    {
+        this.key = input;
+        this.lLink = null;
+        this.rLink = null;
+        pages=new LinkedList<Integer>();
+    }
+    
+
+    /**
+     * @return Returns the toString of the data in this node.
+     */
+    public String toString()
+    {
+    	if(this.key!=null) 
+    		return key.toString();
+        return null;
+    }
+    
+    /**
+     * Adds what page number the word is on to a list, and checks if there are too many instances for it to be worth documenting
+     * @param pageNumber The page number the word is on
+     * @return If there are as many instances of this data as the int MAX_PAGES returns true, otherwise returns false.
+     */
+    public boolean pageInsert(int pageNumber) {
+    	pages.insertAt(pages.getLength()+1, pageNumber);
+    	if(pages.getLength()>=MAX_PAGES) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+}
+    

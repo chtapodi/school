@@ -1,0 +1,13 @@
+1)
+	The priorityQueueSort would be O(nlog(n)). This is because heapify is log(n), 
+	but it has to run heapify for each removed comparable, so thats multiplied by n
+
+2)
+	It would be O(n^2) because it would have to go all the way through the linked list
+	for each value it was going to remove, so n*n, theirfore O(n^2)
+	
+3)
+	Because that is the first location that has a child. Because integers are used you
+	don't have to worry about it being the right or left child, because the value rounds down.
+	You wouldn't be able to do this with normal BST, but because of the property of a heap
+	where it is always a complete tree, it's possible to do this.

@@ -1,0 +1,65 @@
+
+/**
+ * An ADT that holds a word, and the pages it appears on.
+ * 
+ * @author xavier
+ * 
+ */
+public class Document implements Comparable<Document>{
+
+	private String word;
+	private LinkedList<Integer> pages;
+	private final int MAX_PAGES=5;
+	
+	
+	/**
+	 * Constructor for a "Document" ADT, which holds a word and the page numbers it appears on
+	 * @param toStore The word
+	 * @param page The first page number
+	 */
+	public Document(String toStore, int page) {
+		word=toStore;
+		
+		pages=new LinkedList<Integer>();
+		pages.insertAt(pages.getLength(), page);
+	}
+	
+	/**
+	 * Adds an instance of the word, returns true if the instance has reached the limit
+	 * There will never be duplicate pages
+	 * @param page The page number
+	 * @return True or false based on if the max of this word has been reached
+	 */
+	public boolean addInstance(int page) {
+		
+		if(pages.getData(pages.getLength()-1)!=page) { //If most recent page isn't the same as the new page
+			
+			pages.insertAt(pages.getLength(), page);
+			
+			if(pages.getLength()>=MAX_PAGES-1) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns the word of this document
+	 * @return The word
+	 */
+	public String toString() {
+		return this.word  + " " + pages.toString();
+	}
+	
+	/**
+	 * Compares the words of the two documents
+	 * @param other The other document to be compared to 
+	 * @return <0 if smaller than other, 0 if other, >0 if greater
+	 */
+	public int compareTo(Document other) {
+		return this.word.compareToIgnoreCase(other.toString());
+	}
+
+
+}

@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Converter {
+	private FileReader r;
+	/**
+	 * 
+	 */
+	public Converter(String location) {
+		FileReader r= new FileReader(location);
+	}
+	
+	public void convert(String inFix) {
+		String toReturn="";
+		
+		
+		
+		
+		
+	}
+
+}

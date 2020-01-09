@@ -1,0 +1,26 @@
+
+public class Hand {
+	final 
+	
+	private int player;
+	
+	public Hand(int setplayer) {
+		player = setplayer;
+		Card[] hand=new Card[]
+		
+	}
+	
+	public void drawCard() {
+		
+	}
+	
+	public Card removeCard(int cardPos) {
+		
+		
+	}
+	
+	public Card seekCard(int cardPos) {
+		
+	}
+
+}

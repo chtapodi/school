@@ -1,0 +1,84 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class BSTTesting {
+	public static void main(String[] args) {
+
+		Testing.setVerbose(true);
+		Testing.startTests();
+
+		testSearch();
+		testRemove();
+		
+		testDocument();
+		
+		Testing.finishTests();
+
+	}
+
+	private static void testSearch() {
+		BinarySearchTree tree = fillTree();
+		
+		Testing.assertEquals("Exists", "AAA", tree.search("AAA"));
+		Testing.assertEquals("Exists", "BBB", tree.search("BBB"));
+		Testing.assertEquals("does not exist", null, tree.search("ZZZ"));
+		Testing.assertEquals("does not exist", null, tree.search("Ayyyy"));
+		Testing.assertEquals("does not exist", null, tree.search("CCCCC"));
+	}
+
+	
+	private static void testRemove() {
+		BinarySearchTree tree = fillTree();
+		System.out.println(tree.toString());
+		
+		tree.remove("CCB");
+		Testing.assertEquals("After removal with no kids", "((  AAA (  BBA ))  BBB ((  CAA )  CCC (  DDD )))", tree.toString());
+		
+		tree.remove("AAA");
+		Testing.assertEquals("After removal with one kid", "((  BBA )  BBB ((  CAA )  CCC (  DDD )))", tree.toString());
+		
+		tree.remove("CCC");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  BBB ((  CAA )  DDD ))", tree.toString());
+		
+		tree.insert("EEE");
+		tree.remove("CAA");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  BBB (  DDD (  EEE )))", tree.toString());
+
+		tree.remove("BBB");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  DDD (  EEE ))", tree.toString());
+
+	}
+	
+	
+	private static void testDocument() {
+		Document doc = new Document("Cat",1);
+		Testing.assertEquals("addition of new page", false, doc.addInstance(2));
+		Testing.assertEquals("addition of same page", false, doc.addInstance(2));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(3));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(4));
+		Testing.assertEquals("addition of new page, should be full", true, doc.addInstance(5));
+		
+		
+		Testing.assertEquals("tests getPages", "1,2,3,4", doc.getPages());
+	}
+	
+	
+	private static BinarySearchTree fillTree() {
+		BinarySearchTree tree = new BinarySearchTree<String>();
+		tree.insert("BBB");
+		tree.insert("CCC");
+		tree.insert("DDD");
+		tree.insert("AAA");
+		tree.insert("BBA");
+		tree.insert("CAA");
+		tree.insert("CCB");
+		return tree;
+		
+	}
+
+}

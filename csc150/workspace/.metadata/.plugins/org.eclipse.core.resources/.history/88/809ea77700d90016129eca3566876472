@@ -1,0 +1,49 @@
+import CSLib.DrawingBox;
+import java.awt.Rectangle;
+
+public class RectangleTester {
+
+	/**
+	 * Xavier Quinn
+	 * The purpose of this class is to create a rectangle using java.awt.R
+	 * Lab 2
+	 * 01.12.17
+	 */
+	public static void main(String[] args) {
+		//This creates several DrawingBox s
+		
+		DrawingBox myBoard;
+		myBoard = new DrawingBox();
+		myBoard.setVisible(true);
+		//myBoard.drawRect(320,230,120,180);
+		
+		
+		//This makes several new rectangles
+		
+		Rectangle myRect,Rect1,Rect2;
+		myRect = new Rectangle(320,230,120,180);
+		myBoard.drawRect(myRect);
+		
+		Rect1 = new Rectangle(50,180,120,180);
+		Rect2 = new Rectangle(100,240,150,200);
+		
+		//This messes with the rectangles
+		
+		myRect.grow(20, 20);
+		myBoard.drawRect(myRect);
+		
+		myRect.translate(280, -50);
+		myBoard.drawRect(myRect);
+		
+		myRect.setLocation(75, 250);
+		myBoard.drawRect(myRect);
+		
+		myRect.setLocation(75, 50);
+		myRect.setSize(200, 150);
+		myBoard.drawRect(myRect);
+		
+		
+
+	}
+
+}

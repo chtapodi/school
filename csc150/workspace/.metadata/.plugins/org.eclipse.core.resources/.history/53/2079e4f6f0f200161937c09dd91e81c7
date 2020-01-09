@@ -1,0 +1,126 @@
+/**
+ * Linked List is a collection of data nodes. All methods here relate to how one
+ * can manipulate those nodes.
+ * 
+ * @author Xavier
+ * @version 02.09.17
+ * 
+ *  * I affirm that I have carried out the attached academic endeavors with full academic honesty, in
+ * accordance with the Union College Honor Code and the course syllabus.
+ */
+public class LinkedList {
+	private int length; // number of nodes
+	private ListNode firstNode; // pointer to first node
+
+	public LinkedList() {
+		length = 0;
+		firstNode = null;
+	}
+
+	/**
+	 * insert new String at linked list's head
+	 * 
+	 * @param newData the String to be inserted
+	 */
+	public void insertAtHead(String newData) {
+		ListNode newnode = new ListNode(newData);
+		if (getLength() == 0) {
+			firstNode = newnode;
+		} else {
+			newnode.next = firstNode;
+			firstNode = newnode;
+		}
+		length++;
+	}
+	
+	
+	/**
+	 * Inserts the String at the end of the linked list
+	 * @param newData The String to insert
+	 */
+	public void insertAtTail(String newData) {
+		ListNode newNode = new ListNode(newData);
+
+		if (getLength() == 0) {
+			firstNode = newNode;
+		} 
+		else {
+
+			ListNode n;
+			n = firstNode;
+			
+			while (n.next != null) {
+				n = n.next;
+				System.out.println("CheckPoint");
+			}
+			
+			n.next = newNode;
+			
+		}
+		length++;
+	}
+
+	/**
+	 * Removes the lists first node and returns the Data from the removed String
+	 * 
+	 * @return Data from the removed String
+	 */
+	public String removeHead() {
+		if (getLength() == 0) {
+			return null;
+		} else {
+			String tmpData = firstNode.data;
+			firstNode = firstNode.next;
+			length--;
+			return tmpData;
+		}
+	}
+	
+	/**
+	 * Searches through the linked list for a string
+	 * @param searchString What the Strings name is
+	 * @return The start time of the String
+	 */
+	public int search(String searchString) {
+		ListNode n;
+		n = firstNode;
+		while (n!=null && n.data != searchString) {
+			n = n.next;
+		}
+		if(n!=null) {
+			return n.data;
+		}
+		return -1;
+		
+	}
+
+	/**
+	 * Turn entire chain into a string
+	 * 
+	 * @return return linked list as printable string of format
+	 *         (string,\nstring,\nstring)
+	 */
+	public String toString() {
+		String toReturn = "(";
+		ListNode n;
+		n = firstNode;
+		while (n != null) {
+			toReturn = toReturn + n; // call node's toString automatically
+			n = n.next;
+			if (n != null) {
+				toReturn = toReturn + ",\n";
+			}
+		}
+		toReturn = toReturn + ")";
+		return toReturn;
+	}
+
+	/**
+	 * getter for number of nodes in the linked list
+	 * 
+	 * @return length of LL
+	 */
+	public int getLength() {
+		return length;
+	}
+}

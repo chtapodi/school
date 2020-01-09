@@ -1,0 +1,170 @@
+/**
+ * Linked List is a collection of data nodes. All methods here relate to how one
+ * can manipulate those nodes.
+ * 
+ * @author Xavier
+ * @version 02.09.17
+ * 
+ *          * I affirm that I have carried out the attached academic endeavors
+ *          with full academic honesty, in accordance with the Union College
+ *          Honor Code and the course syllabus.
+ */
+public class LinkedList<E extends Comparable<E>> {
+	private int length; // number of nodes
+	private ListNode<E> firstNode; // pointer to first node
+
+	public LinkedList() {
+		length = 0;
+		firstNode = null;
+	}
+
+
+	/**
+	 * Inserts at specified location
+	 * @param The index at which to insert, starting at 0
+	 * @param The thing to insert
+	 */
+	public void insertAt(int place, E toInsert) {
+		ListNode<E> newNode = new ListNode<E>(toInsert);
+
+		if (getLength() == 0) {
+			firstNode = newNode; //If theres nothing in the list, insert at start
+		}
+
+		else {
+			ListNode<E> n;
+			n = firstNode;
+			int index = 0;
+			while (index != (this.getLength()-1) && index < (place - 1)) { //goes until right before place or end
+				n = n.next;
+				index++;
+			}
+			
+			if (index == this.getLength()) { //adds to end if place is above end
+				n.next = newNode; 
+			} 
+			else if(place<=0) { //if place is 0 or less, insert at start
+				newNode.next=firstNode; //
+				firstNode=newNode;
+			}
+			
+			else { //n.next is 'place', adds before place.
+				newNode.next = n.next;
+				n.next = newNode;
+			}
+		}
+		length++;
+	}
+	
+	/**
+	 * Removes the data from the given location and returns it
+	 * @param The location to remove, starting at 0
+	 * @return The removed information
+	 */
+	
+	public E removeAt(int place) {
+		if(place<0 || place>=this.getLength()) 
+			return null;
+
+		ListNode<E> n;
+		n = firstNode;
+		E toReturn;
+		
+		if(place==0) { //If its the first node
+			toReturn=n.data;
+			firstNode=n.next;
+			length--;
+			return toReturn;
+		}
+			
+		int index = 0;
+		while (index != (this.getLength()-1) && index < (place - 1)) { //Goes until before the location
+			n = n.next;
+			index++;
+		}
+		
+		toReturn = (E)(n.next.data); //returns the data at the place
+		n.next=n.next.next;
+		
+		
+		length--;
+		return toReturn;
+	}
+
+
+	/**
+	 * Turn entire chain into a string
+	 * 
+	 * @return return linked list as printable string of format
+	 *         (string, string, string)
+	 */
+	public String toString() {
+		String toReturn = "(";
+		ListNode<E> n;
+		n = firstNode;
+		while (n != null) {
+			toReturn = toReturn + n.toString();
+			n = n.next;
+			if (n != null) {
+				toReturn = toReturn + ", ";
+			}
+		}
+		toReturn = toReturn + ")";
+		return toReturn;
+	}
+
+	/**
+	 * getter for number of nodes in the linked list
+	 * 
+	 * @return length of LL
+	 */
+	public int getLength() {
+		return length;
+	}
+	
+	/**
+	 * Gets the information from the specified location
+	 * @param The index of what to get, starting at 0
+	 * @return the information
+	 */
+	public E getData(int place) {
+		if(place<0 || place>=this.getLength()) 
+			return null;
+
+		ListNode<E> n;
+		n = firstNode;
+		E toReturn;
+		if(place==0) {
+			toReturn=n.data;
+			return toReturn;
+		}
+			
+		int index = 0;
+		while (index != (this.getLength()-1) && index < (place - 1)) {
+			n = n.next;
+			index++;
+		}
+		toReturn = (E)(n.next.data);
+		return toReturn;
+	}
+	
+	/**
+	 * Clears the linked list of everything
+	 */
+	public void clear() {
+		firstNode=null;
+		length=0;
+	}
+	
+	/**
+	 * Adds all of other LinkedList to this one, emptying the other one in the proccess
+	 * @param other The other LinkedList
+	 */
+	public void addAll(LinkedList<E> other) {
+		while(other.getLength()>=0) {
+			this.insertAt(this.getLength()+1,other.removeAt(0));
+		}
+	}
+	
+	
+}

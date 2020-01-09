@@ -1,0 +1,73 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Converter {
+	private FileReader r;
+	/**
+	 * 
+	 */
+	public Converter(String location) {
+		FileReader r= new FileReader(location);
+	}
+	
+	public void convert(String inFix) {
+		String toReturn="";
+		String tmp="";
+		
+		while(!tmp.equals("EOF")) { //While next is not EOF
+			
+			tmp=r.nextToken();
+			Stack pile = new Stack<Token>();
+			
+			toReturn += analyze(tmp).handle(pile);
+		
+		}
+		
+	}
+	
+	
+	private Token analyze(String tmp) {
+		
+		if(tmp.equals("(")) {
+			LeftParen toHandle=new LeftParen();
+			return toHandle;
+		}
+		else if(tmp.equals(")")) {
+			RightParen toHandle=new RightParen();
+			return toHandle;
+		}
+		else if(tmp.equals("^")) {
+			Power toHandle=new Power();
+			return toHandle;
+		}
+		else if(tmp.equals("*")) {
+			Times toHandle=new Times();
+			return toHandle;
+		}
+		else if(tmp.equals("/")) {
+			Divide toHandle=new Divide();
+			return toHandle;
+		}
+		else if(tmp.equals("+")) {
+			Plus toHandle=new Plus();
+			return toHandle;
+		}
+		else if(tmp.equals("-")) {
+			Minus toHandle=new Minus();
+			return toHandle;
+		}
+		else {
+			Operand toHandle=new Operand();
+			return toHandle;
+		}
+
+		
+		
+	}
+
+}

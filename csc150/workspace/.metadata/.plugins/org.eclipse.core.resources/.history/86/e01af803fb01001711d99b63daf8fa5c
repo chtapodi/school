@@ -1,0 +1,48 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class BSTTesting {
+	public static void main(String[] args) {
+
+		Testing.setVerbose(true);
+		Testing.startTests();
+
+		testSearch();
+		
+		Testing.finishTests();
+
+	}
+
+	private static void testSearch() {
+		BinarySearchTree tree = fill();
+		
+		Testing.assertEquals("Exists", "Blob", tree.search("Blob").key);
+		Testing.assertEquals("Exists", "Albert", tree.search("Albert").key);
+	}
+
+	private static void testInsert() {
+		BinarySearchTree tree = fill();
+		
+		
+		
+	}
+	
+	private static BinarySearchTree fill() {
+		BinarySearchTree tree = new BinarySearchTree<String>();
+		tree.insert("Albert", 5);
+		tree.insert("Steve", 1);
+		tree.insert("Bert", 10);
+		tree.insert("Freddy", 4);
+		tree.insert("Zuthar", 22);
+		tree.insert("Mike", 4);
+		tree.insert("Blob", 6);
+		return tree;
+		
+	}
+
+}

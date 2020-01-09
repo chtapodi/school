@@ -1,0 +1,57 @@
+/** Tester for the Event and LinkedList classes
+ * 
+ * @author <em>your name here</em>, Matt Anderson, Aaron Cass, and Chris Fernandes
+ * @version 2/08/17
+ */
+public class ListTester {
+    public static final boolean VERBOSE = true;
+    
+    public static void main(String[] args)
+    {
+    	System.out.println("Starting Tests");
+	
+    	testConstructor();
+    	testCompareTo();
+	
+    	System.out.println("Tests Complete");
+    }
+    
+    private static void testConstructor()
+    {
+
+    	Testing.testSection("Event Constructor test");
+	
+    	Event e1 = new Event("book club", 2012, 2, 24, 1000, 1200);
+    	Testing.assertEquals("Non-default constructor", "book club  2/24/2012  1000-1200", e1.toString());
+    }
+    
+    private static void testCompareTo()
+    {
+    	Testing.testSection("Event compareTo tests");
+	
+    	Event later = new Event("book club", 2012, 2, 24, 1000, 1200);
+    	Event earlier = new Event("chess club", 2011, 2, 24, 900, 1000);
+    	Testing.assertEquals("different years", 1, later.compareTo(earlier));
+    	Testing.assertEquals("different years", -1, earlier.compareTo(later));
+    	
+    	Event laterToo= new Event("Boyscouts", 2012, 2, 24, 1000, 1200);
+    	Testing.assertEquals("Exact same", 0, later.compareTo(laterToo));
+    	
+    	Event earlierMonth= new Event("Pi Contest", 2012, 1, 24, 1000, 1200);
+    	Testing.assertEquals("Same, but a month before", 1, earlierMonth.compareTo(later));
+    	
+    	
+    	Event earlierDay= new Event("Jazz Cub", 2012, 2, 23, 1000, 1200);
+    	Testing.assertEquals("Same, but a day before", 1, earlierDay.compareTo(later));
+    	
+    	Event earlierTime= new Event("Girlscouts", 2012, 2, 23, 1000, 1200);
+    	Testing.assertEquals("Same, but an hour before", 1, earlierTime.compareTo(later));
+    	
+    	
+    	// Add more tests here.
+    	// Be sure every line in compareTo gets a chance to execute.
+    }    
+    
+    // Add more testing methods here when you get to Step 2 of the lab 
+
+}

@@ -1,0 +1,38 @@
+/**
+ * A node for a Binary Search Tree
+ * @author xavier
+ */
+public class BSTNode<E extends Comparable<E>>
+{
+    public E key;
+    public BSTNode lLink;  
+    public BSTNode rLink;
+
+    
+    /** Non-default constructor
+     * 
+     * @param word is the Word you want stored, pageNumber is the page number it's on
+     */
+    public BSTNode(E word, int pageNumber)
+    {
+        this.key = word;
+        this.lLink = null;
+        this.rLink = null;
+
+    }
+    
+
+    /**
+     * @return Returns the toString of the data in this node.
+     */
+    public String toString()
+    {
+    	if(this.key!=null) 
+    		return key.toString();
+        return null;
+    }
+    
+
+    
+}
+    

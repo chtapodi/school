@@ -1,0 +1,32 @@
+/**
+ * Given an input text, goes though and indexs the words in the text. It does not index words that are too common.
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Indexer {
+	
+	FileReader r;
+	BinarySearchTree dictionary;
+	BinarySearchTree Index;
+	
+	/**
+	 * Constructor for the indexer, which takes the source file as the input
+	 * @param text The source file.
+	 */
+	public Indexer(String text) {
+		r=new FileReader(text);
+		dictionary=new BinarySearchTree<String>();
+		Index=new BinarySearchTree<Document>();
+	}
+	
+	
+	
+	
+	
+	
+
+}

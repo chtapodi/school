@@ -1,0 +1,155 @@
+import CSLib.DrawingBox;
+import java.awt.Rectangle;
+
+/**
+ * Creates and manipulate three dimensional blocks with xyz dimentions
+ * and xy position
+ * @author Xavier
+ *
+ */
+
+
+
+public class Block {
+	
+	
+	//Constant xyz value
+	final int DEFAULT_BLOCK_XYZ = 50;
+	final int DEFAULT_BLOCK_POSX = 100;
+	final int DEFAULT_BLOCK_POSY = 100;
+	
+	//Instance Variables
+	private int xsize;
+	private int ysize;
+	private int zsize;
+	private int xpos;
+	private int ypos;
+	
+	
+	//Constructors
+	
+	/**
+	 * Constructs the default block with default size and postion
+	 * @param takes no inputs
+	 */
+	public Block(){
+		xsize = DEFAULT_BLOCK_XYZ;
+		ysize = DEFAULT_BLOCK_XYZ;
+		zsize = DEFAULT_BLOCK_XYZ;
+		xpos = DEFAULT_BLOCK_POSX;
+		ypos = DEFAULT_BLOCK_POSY;
+	}
+	
+	
+	/**
+	 * Constructs a block with default sizes and given coordinates
+	 * @param xpos The x position of the block, absolute value of input
+	 * @param ypos The y position of the block, absolute value of input
+	 */
+	public Block(int setxpos, int setypos) {
+		xsize = DEFAULT_BLOCK_XYZ;
+		ysize = DEFAULT_BLOCK_XYZ;
+		zsize = DEFAULT_BLOCK_XYZ;
+		xpos = Math.abs(setxpos);
+		ypos = Math.abs(setypos);
+	}
+	
+	
+	
+	//Getter methods 
+	
+	
+	/**
+	 * @return gets the x size of the block
+	 */
+	public int getXSize(){
+		return xsize;
+	}
+	
+	/**
+	 * @return gets the y size of the block
+	 */
+	public int getYSize(){
+		return ysize;
+	}
+	
+	/**
+	 * @return gets the z size of the block
+	 */
+	public int getZSize(){
+		return zsize;
+	}
+	
+	/**
+	 * @return gets the x position of the block
+	 */
+	public int getXPos(){
+		return xpos;
+	}
+	
+	
+	/**
+	 * @return gets the y position of the block
+	 */
+	public int getYPos(){
+		return ypos;
+	}
+	
+	
+	//Setter methods
+	
+	/**
+	 * Changes the coordinates of the block
+	 * @param newx is the new x position, uses absolute value
+	 * @param newy is the new y position, uses absolute value
+	 */
+	public void setPosition(int newxpos, int newypos) {
+		xpos=Math.abs(newxpos);
+		ypos=Math.abs(newypos);
+	}
+	
+	
+	/**
+	 * Changes the dimentions of the block
+	 * @param newxsize the new x size, uses absolute values
+	 * @param newysize the new y size, uses absolute values
+	 * @param newzsize the new z size, uses absolute values
+	 */
+	public void setDimenstions(int newxsize, int newysize, int newzsize) {
+		xsize=Math.abs(newxsize);
+		ysize=Math.abs(newysize);
+		zsize=Math.abs(newzsize);
+	}
+	
+	
+	public void display(DrawingBox box) {
+		Rectangle blockrect;
+		blockrect = new Rectangle(xpos,ypos,xsize,ysize);
+		box.drawRect(blockrect);
+		for(int i=0;i<zsize;i=i+2){
+			blockrect.setLocation(xpos-i, ypos-i);
+			box.drawRect(blockrect);
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * What this does
+	 * @param inputs and what it is
+	 */
+	
+	
+	
+	
+	/**
+	 * @return What it returns
+	 */
+
+}

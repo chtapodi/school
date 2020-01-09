@@ -1,0 +1,43 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class ConsecutiveTest {
+	public static void main(String[] args) {
+
+		Testing.setVerbose(true);
+		Testing.startTests();
+		
+		testDocument();
+		
+		Testing.finishTests();
+
+	}
+
+
+	
+	private static void testDocument() {
+		Document doc = new Document("Cat",1);
+		Testing.assertEquals("addition of same page", false, doc.addInstance(1));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(2));
+		Testing.assertEquals("addition of same page", false, doc.addInstance(3));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(5));
+		Testing.assertEquals("addition of same page", false, doc.addInstance(6));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(7));
+		Testing.assertEquals("addition of new page", true, doc.addInstance(8));
+		
+		
+
+		Testing.assertEquals("tests toString", "Cat: 1, 2, 3, 4, 5", doc.toString());
+
+		
+	}
+	
+	
+
+
+}

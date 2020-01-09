@@ -1,0 +1,11 @@
+1)
+	setStart and setEnd where not in the interface because they are not required for a class to be a LogEntry
+	This is shown by how Reminders do not have a start or end time, and are a LogEntry
+	
+2)
+	Unless you want to make reminders have a specific time, as well as any future LogEntry events, it is probably not the best idea to put it in the interface. You would have to add those methods to the Reminder class
+	
+3)
+	I do have object casting in my code. Only when I was getting the events from a LogBook to call methods that where not included in the interface.
+	It was neccisary because the getEntry() method returns a LogEntry, which only has the the methods that are implemented in it. To call class specific methods I had to cast the LogEntry to the class that it was in order to use its methods.
+	The compiler thinks you are trying to call a method that does not exist because LogEntry does not have it.

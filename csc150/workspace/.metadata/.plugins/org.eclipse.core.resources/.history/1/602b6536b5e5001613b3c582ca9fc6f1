@@ -1,0 +1,56 @@
+
+public class Hand {
+	
+	private int nextSpot;
+	private Card[] hand;
+	
+	/**
+	 * This contructs a new hand on a per player basis
+	 * @param deckSize The size of the deck
+	 */
+	
+	public Hand(int deckSize) {
+
+		nextSpot=0;
+		//The largest hand someone can have is theoretically the entire deck -1
+		hand = new Card[deckSize-1];
+		
+	}
+	
+	/**
+	 * This receives a new card and adds it to the hand.
+	 * @param newcard is based a card from the shared deck
+	 */
+	public void drawCard(Card newCard) {
+		
+		hand[nextSpot]=newCard;
+		System.out.println(hand[nextSpot].toString() + " is at " + nextSpot);
+		nextSpot++;
+		
+	}
+	
+	/**
+	 *
+	 * @param The position of the card you want to remove
+	 * @return the card you removed
+	 */
+	public void removeCard(int cardPos) {
+		for(int i = cardPos;hand[i]!=null; i++) {
+			hand[ i ] = hand[ i + 1 ];
+		}
+		for(int i=0;i<hand.length -1;i++) {
+			System.out.println(hand[i]);
+		}
+		
+		
+	}
+	
+	public Card seekCard(int cardPos) {
+		return hand[cardPos];
+	}
+	
+	public int handSize() {
+		return nextSpot;
+	}
+
+}

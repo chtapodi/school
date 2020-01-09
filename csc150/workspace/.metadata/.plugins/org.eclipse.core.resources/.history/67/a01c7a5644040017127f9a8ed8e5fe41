@@ -1,0 +1,251 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class BSTTesting {
+	public static void main(String[] args) {
+
+		Testing.setVerbose(true);
+		Testing.startTests();
+		
+		testInsertsLL();
+		testRemoveLL();
+
+		testSearch();
+		testRemove();
+		
+		testDocument();
+		
+		testDocumentsInTree();
+		
+		testIndexer();
+		
+		Testing.finishTests();
+
+	}
+
+	private static void testSearch() {
+		BinarySearchTree tree = fillTree();
+		
+		Testing.assertEquals("Exists", "AAA", tree.search("AAA"));
+		Testing.assertEquals("Exists", "BBB", tree.search("BBB"));
+		Testing.assertEquals("does not exist", null, tree.search("ZZZ"));
+		Testing.assertEquals("does not exist", null, tree.search("Ayyyy"));
+		Testing.assertEquals("does not exist", null, tree.search("CCCCC"));
+	}
+
+	
+	private static void testRemove() {
+		BinarySearchTree tree = fillTree();
+		System.out.println(tree.toString());
+		
+		tree.remove("CCB");
+		Testing.assertEquals("After removal with no kids", "((  AAA (  BBA ))  BBB ((  CAA )  CCC (  DDD )))", tree.toString());
+		
+		tree.remove("AAA");
+		Testing.assertEquals("After removal with one kid", "((  BBA )  BBB ((  CAA )  CCC (  DDD )))", tree.toString());
+		
+		tree.remove("CCC");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  BBB ((  CAA )  DDD ))", tree.toString());
+		
+		tree.insert("EEE");
+		tree.remove("CAA");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  BBB (  DDD (  EEE )))", tree.toString());
+
+		tree.remove("BBB");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  DDD (  EEE ))", tree.toString());
+
+	}
+	
+	
+	private static void testDocument() {
+		Document doc = new Document("Cat",1);
+		Testing.assertEquals("addition of same page", false, doc.addInstance(1));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(2));
+		Testing.assertEquals("addition of same page", false, doc.addInstance(2));
+		Testing.assertEquals("addition of new page", false, doc.addInstance(3));
+		Testing.assertEquals("addition of same page", false, doc.addInstance(3));
+		Testing.assertEquals("addition of new page", true, doc.addInstance(4));
+		Testing.assertEquals("tests getWord", "Cat", doc.getWord());
+		Testing.assertEquals("tests toString", "Cat: 1, 2, 3, 4", doc.toString());
+		
+		Document doc2 = new Document("Bat",117);
+		Document doc3 = new Document("Bat",7);
+		
+		Testing.assertEquals("tests compareTo of documents", 1, doc.compareTo(doc2));
+		Testing.assertEquals("tests compareTo of documents", -1, doc2.compareTo(doc));
+		
+		Testing.assertEquals("tests compareTo of documents", 0, doc2.compareTo(doc3));
+		
+		Testing.assertEquals("tests compareTo of documents", 1, doc.compareTo("Bat"));
+		Testing.assertEquals("tests compareTo of documents", 0, doc.compareTo("Cat"));
+		Testing.assertEquals("tests compareTo of documents", 0, doc.compareTo("cat"));
+		
+	}
+	
+	
+	private static void testDocumentsInTree() {
+		BinarySearchTree<Document> index=new BinarySearchTree<Document>();
+		Document doc1 = new Document("Joules",7);
+		Document doc2 = new Document("damnation",100);
+		Document doc3 = new Document("bork",4);
+		Document doc4 = new Document("sandwich",1);
+		Document doc5 = new Document("ruffles",3);
+		Document doc6 = new Document("zubat",8);
+		Document doc7 = new Document("Alfalfa",2);
+		
+		
+		Document doc8 = new Document("damnation",12);
+		Document doc9 = new Document("Alfalfa",77);
+		Document doc10 = new Document("Joules",8);
+		
+		index.insert(doc1);
+		index.insert(doc2);
+		index.insert(doc3);
+		index.insert(doc4);
+		index.insert(doc5);
+		index.insert(doc6);
+		index.insert(doc7);
+		
+		
+		Testing.assertEquals("toString of tree full of documents", "((((  Alfalfa: 2 )  bork: 4 )  damnation: 100 )  Joules: 7 ((  ruffles: 3 )  sandwich: 1 (  zubat: 8 )))", index.toString());
+		
+		
+		Testing.assertEquals("tests search", doc8.getWord(), index.search(doc8).getWord());
+		//Testing.assertEquals("tests search", doc8.getWord(), index.search("damnation").getWord());
+		
+		
+		
+		Testing.assertEquals("tests getSize", 7, index.getSize());
+		
+		
+		
+		index.remove(doc9);
+		Testing.assertEquals("toString of tree full of documents", "(((  bork: 4 )  damnation: 100 )  Joules: 7 ((  ruffles: 3 )  sandwich: 1 (  zubat: 8 )))", index.toString());
+		
+		index.remove(doc10);
+		Testing.assertEquals("toString of tree full of documents after removal", "(((  bork: 4 )  damnation: 100 )  ruffles: 3 (  sandwich: 1 (  zubat: 8 )))", index.toString());
+
+	}
+	
+	
+	private static void testInsertsLL() {
+    	Testing.testSection("Tests insertAtHead, insertAtTail, and toString");
+    	LinkedList<String> list=new LinkedList<String>();
+    	
+    	LinkedList<String> list2=new LinkedList<String>();
+    	
+    	LinkedList<Integer> intList=new LinkedList<Integer>();
+
+    	
+    	
+    	list.insertAt(0, "One");
+    	Testing.assertEquals("Tests addition in empty list at start", "One", list.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 1, list.getLength());
+    	
+    	list.insertAt(5, "Two");
+    	Testing.assertEquals("Tests addition at location longer than length", "One, Two", list.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 2, list.getLength());
+    	
+    	list.insertAt(1, "Three");
+    	Testing.assertEquals("Tests addition between nodes", "One, Three, Two", list.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 3, list.getLength());
+    	
+    	list.insertAt(0, "Four");
+    	Testing.assertEquals("Tests addition at start", "Four, One, Three, Two", list.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 4, list.getLength());
+    	
+    	list.insertAt(-6, "Five");
+    	Testing.assertEquals("Tests addition at negative index", "Five, Four, One, Three, Two", list.toString());
+    	
+    	Testing.assertEquals("Tests addition in empty list capacity", 5, list.getLength());
+    	list.insertAt(6, "Six");
+    	Testing.assertEquals("Tests addition at end", "Five, Four, One, Three, Two, Six", list.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 6, list.getLength());
+    	
+    	list2.insertAt(0, "a");
+    	list2.insertAt(1, null);
+    	list2.insertAt(2, "b");
+
+
+    	Testing.assertEquals("Tests addition between nodes", "(a, null, b)", list2.toString());
+    	
+    	
+    	intList.insertAt(0, 1);
+    	Testing.assertEquals("Tests addition in empty list at start", "1", intList.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 1, intList.getLength());
+    	
+    }
+    
+    
+    private static void testRemoveLL() {
+    	Testing.testSection("Tests insertAtHead, insertAtTail, and toString");
+    	LinkedList<String> list=new LinkedList<String>();
+    	list.insertAt(10, "One");
+    	list.insertAt(10, "Two");
+    	list.insertAt(10, "Three");
+    	list.insertAt(10, "Four");
+    	Testing.assertEquals("Just checking", "One, Two, Three, Four", list.toString());
+    	Testing.assertEquals("Tests addition in empty list capacity", 4, list.getLength());
+    	
+    	Testing.assertEquals("Test removal of last", "Four", list.removeAt(3));
+    	Testing.assertEquals("Test removal of last", "One, Two, Three", list.toString());
+    	Testing.assertEquals("Tests capacity after removal", 3, list.getLength());
+    	
+    	
+    	Testing.assertEquals("Test removal of first", "One", list.removeAt(0));
+    	Testing.assertEquals("Test removal of first", "Two, Three", list.toString());
+    	Testing.assertEquals("Tests capacity after removal", 2, list.getLength());
+    	
+    	Testing.assertEquals("Test removal of first", null, list.removeAt(-5));
+    	Testing.assertEquals("Test removal of first", "Two, Three", list.toString());
+    	Testing.assertEquals("Tests capacity after removal", 2, list.getLength());
+
+
+    	Testing.assertEquals("Test removal of first", null, list.removeAt(5));
+    	Testing.assertEquals("Test removal of first", "Two, Three", list.toString());
+    	Testing.assertEquals("Tests capacity after removal", 2, list.getLength());
+    }
+	
+	
+	private static void testIndexer() {
+		
+		
+//		Indexer index = new Indexer("src/proj7_input.txt");
+//		index.interpret();
+//		
+//		Indexer index2 = new Indexer("src/uscons.txt");
+//		index2.interpret();
+		
+//		Indexer index3 = new Indexer("src/Test.txt");
+//		index3.interpret();
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private static BinarySearchTree fillTree() {
+		BinarySearchTree tree = new BinarySearchTree<String>();
+		tree.insert("BBB");
+		tree.insert("CCC");
+		tree.insert("DDD");
+		tree.insert("AAA");
+		tree.insert("BBA");
+		tree.insert("CAA");
+		tree.insert("CCB");
+		return tree;
+		
+	}
+
+}

@@ -1,0 +1,7 @@
+﻿1)
+	I think insertAtTail would be O(n) because it does one operation per length of list.
+	RemoveHead is a O(1) because it only does one thing.
+	Search is a worst case O(n) because it only goes through once.
+2)
+	removeHead would become a O(n) operation because it has to move the entire array down.
+	I think if it was stored as an array it would have the same efficiency, as there’s no faster way than to loop through the list because we are storing objects and searching for strings.

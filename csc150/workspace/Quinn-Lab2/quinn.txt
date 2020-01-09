@@ -1,0 +1,33 @@
+1.
+
+		DrawingBox myBoard;
+	This declares that there is now a variable of the type DrawingBox with the name myBoard. 
+	in the memory a byte for the variable is claimed.
+		
+		
+		myBoard = new DrawingBox();
+	This is constructing a new DrawingBox for the variable called myBoard.
+	In the memory the entirety of the method DrawingBox from the class CSLib is copied to another location, 
+	and a pointer to the start of the method is made where the variable myBoard is stored.
+	
+	
+		myBoard.setVisible(true);
+	This uses a method from the java.awt.component class to send the input (which is a boolean) as true, which
+	shows or hides the component depending on the variable.
+	This stores that the variable for visibility in the myBoard is true.
+	
+		myBoard.drawRect(320,230,120,180);
+	This draws the board with the input coordinates in the now shown myBoard.
+	This stores the input to the method drawRect at the specified variables (x,y,w,h)
+
+
+2.
+	
+	At 'myBoard = new DrawingBox();' The constructor is invoked
+	In the documentation it gives two options, one being no arguments, which uses the default title, 
+	and the other using a string as an argument, which specifies the title of the board.
+	
+	It represents a method in the DrawingBox class, and the first one is used because 
+	it accepted 4 ints instead of one object.
+	The args represent the x and y coordinates and the width and the height of the rectangle.
+	

@@ -1,0 +1,157 @@
+import java.util.Scanner;
+public class CrazyEights {
+	private final int DEF_DECK_SIZE=104;
+	private final int DEF_NUM_SUITES=4;
+	private final int DEF_CARD_PER_SUITE=13;
+	private final int DEF_INIT_HAND=7;
+	
+	
+	private Hand[] player;
+	private Scanner scan;
+	private int numCards;
+	private Deck deck;
+	private int turn;
+	private String[] playerName;
+	private boolean endGame;
+	private Card faceCard;
+	private String pseudoSuite;
+	
+	
+
+	public CrazyEights() {
+		scan=new Scanner(System.in);
+		deck=new Deck(DEF_DECK_SIZE, DEF_NUM_SUITES, DEF_CARD_PER_SUITE);
+		numCards=DEF_DECK_SIZE;
+		
+		deck.shuffle();
+	}
+	
+	
+	public void playGame() {
+		System.out.println("input number of players");
+		int numPlayers = scan.nextInt();
+		endGame=false;
+		turn=0;
+		pseudoSuite="Nothing, becuase it hasn't been assigned a value yet";
+		
+		
+		if(numPlayers<=1) {
+			System.out.println("This is not enough players");
+		}
+		
+		else if(numPlayers>(numCards/DEF_INIT_HAND)) {
+			System.out.println("You do not have a large enough deck");
+		}
+		else {
+			//The actual gameplay
+			player = new Hand[numPlayers];
+			playerName=new String[numPlayers];
+			
+			for(int i=0;i<numPlayers;i++) {
+				System.out.println("Please input the name of the next player");
+				playerName[i]=scan.next();
+				
+			}
+
+			//Makes a hand for each player
+			for(int i=0;i<numPlayers;i++) {
+				player[i] = new Hand(numCards);
+				for(int j=0; j<7;j++) {
+					player[i].drawCard(deck.deal());
+				}
+				
+			}
+			
+			//Places the starter card
+			faceCard=deck.deal();
+			
+			
+			player[0].showHand();
+			while(endGame==false) {
+				
+				//Says who's turn it is
+				System.out.println("It is now " + playerName[turn] +"s turn\n This is their hand");
+				
+				//Shows the top card
+				System.out.println("The top card is:\n" + faceCard.toString());
+				if (faceCard.getvalue()==8) {
+					System.out.println("But is acting as " + pseudoSuite);
+				}
+				
+				//Shows their had
+				System.out.println("Their hand:\n");
+				player[turn].showHand();
+				
+				
+				
+				
+				//Gets their move
+				System.out.println(playerName[turn] + "s move?");
+				
+				
+				if(player[turn].seekCard(scan.nextInt()).getvalue()==8) {
+					System.out.println("CRAZY EIGHT\nWhich Suite?\n0) Clubs\n1) Diamonds\n2) Hearts\n3) Spades");
+					switch (scan.nextInt()) {
+					
+					case 0: pseudoSuite = "Clubs";
+						break;
+					case 1: pseudoSuite = "Diamonds";
+						break;
+					case 2: pseudoSuite = "Hearts";
+						break;
+					case 3: pseudoSuite = "Spades";
+						break;
+						
+					}
+				}
+				
+				//GOTTA FIX DAT
+				faceCard=player[turn].removeCard(scan.nextInt());
+				
+				
+				
+				//If the game is over
+				if(player[turn].handSize()==0) {
+					endGame=true;
+				}
+				
+				//loops
+				if(turn==numPlayers) {
+					turn=0;
+				}
+				else {
+					turn++;
+				}
+				
+				
+				
+				
+			}
+			
+			
+			
+			
+			
+			/*
+			
+			
+			//This is a test, not real code
+			for(int i=0; i<7;i++) {
+				player[0].drawCard(deck.deal());
+			}
+			
+			
+			for(int i=0;i<player[0].handSize();i++) {
+				System.out.println((player[0].seekCard(i)).toString());
+			}
+			*/
+			
+			
+			
+			
+		}
+		
+		
+	}
+
+}

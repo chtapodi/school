@@ -1,0 +1,55 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Converter {
+	private FileReader r;
+	/**
+	 * 
+	 */
+	public Converter(String location) {
+		FileReader r= new FileReader(location);
+	}
+	
+	public void convert(String inFix) {
+		String toReturn="";
+		String tmp="";
+		
+		while(!tmp.equals("EOF")) { //While next is not EOF
+			tmp=r.nextToken();
+			
+			
+			if(tmp.equals("(")) {
+				
+			}
+			else if(tmp.equals(")")) {
+				
+			}
+			else if(tmp.equals("^")) {
+				
+			}
+			else if(tmp.equals("*")) {
+				
+			}
+			else if(tmp.equals("/")) {
+				
+			}
+			else if(tmp.equals("+")) {
+				
+			}
+			else if(tmp.equals("-")) {
+				
+			}
+			else {
+				
+			}
+		
+		}
+		
+	}
+
+}

@@ -1,0 +1,13 @@
+;
+AB+;
+AB+C+;
+AB+C-;
+ABC*+;
+AB+C*;
+AB/;
+AB/C*;
+AB/C*D-;
+AB+CD-/;
+AB+CD-*E+FG+/;
+ABC^/D-;
+ACB+/DE-^FG*HIJ-^+/;

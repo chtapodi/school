@@ -1,0 +1,98 @@
+import java.util.Scanner;
+public class CrazyEights {
+	private final int DEF_DECK_SIZE=104;
+	private final int DEF_NUM_SUITES=4;
+	private final int DEF_CARD_PER_SUITE=13;
+	private final int DEF_INIT_HAND=7;
+	
+	
+	private Hand[] player;
+	private Scanner scan;
+	private int numCards;
+	private Deck deck;
+	private int turn;
+	private String[] playerName;
+	private boolean endGame;
+	
+	
+
+	public CrazyEights() {
+		scan=new Scanner(System.in);
+		deck=new Deck(DEF_DECK_SIZE, DEF_NUM_SUITES, DEF_CARD_PER_SUITE);
+		numCards=DEF_DECK_SIZE;
+		
+		deck.shuffle();
+	}
+	
+	
+	public void playGame() {
+		System.out.println("input number of players");
+		int numPlayers = scan.nextInt();
+		endGame=false;
+		turn=0;
+		
+		
+		if(numPlayers<=1) {
+			System.out.println("This is not enough players");
+		}
+		
+		else if(numPlayers>(numCards/DEF_INIT_HAND)) {
+			System.out.println("You do not have a large enough deck");
+		}
+		else {
+			player = new Hand[numPlayers];
+			playerName=new String[numPlayers];
+			
+			for(int i=0;i<numPlayers;i++) {
+				System.out.println("Please input the name of the next player");
+				playerName[i]=scan.next();
+				
+			}
+
+			//Makes a hand for each player
+			for(int i=0;i<numPlayers;i++) {
+				player[i] = new Hand(numCards);
+				for(int j=0; j<7;j++) {
+					player[i].drawCard(deck.deal());
+				}
+				
+			}
+			
+			
+			
+			player[0].showHand();
+			while(endGame=false) {
+				
+				System.out.println("It is now " + playerName[turn] +"s turn\n This is their hand");
+				player[turn].showHand();
+				
+				
+			}
+			
+			
+			
+			
+			
+			/*
+			
+			
+			//This is a test, not real code
+			for(int i=0; i<7;i++) {
+				player[0].drawCard(deck.deal());
+			}
+			
+			
+			for(int i=0;i<player[0].handSize();i++) {
+				System.out.println((player[0].seekCard(i)).toString());
+			}
+			*/
+			
+			
+			
+			
+		}
+		
+		
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;Quinn-BST/src/(default package)&apos;&#x0A;- Original project: &apos;Quinn-Lab9&apos;&#x0A;- Destination element: &apos;Quinn-BST/src/(default package)&apos;&#x0A;- Original elements:&#x0A;     BSTNode.java&#x0A;     BinarySearchTree.java" description="Copy compilation units" destination="=Quinn-BST/src&lt;" element1="/src&lt;{BSTNode.java" element2="/src&lt;{BinarySearchTree.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1488673092053" units="2" version="1.0"/>
+</session>

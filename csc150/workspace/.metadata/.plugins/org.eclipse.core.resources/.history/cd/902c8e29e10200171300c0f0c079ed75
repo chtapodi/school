@@ -1,0 +1,73 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class BSTTesting {
+	public static void main(String[] args) {
+
+		Testing.setVerbose(true);
+		Testing.startTests();
+
+		testSearch();
+
+		testRemove();
+		
+		
+		Testing.finishTests();
+
+	}
+
+	private static void testSearch() {
+		BinarySearchTree tree = fill();
+		
+		Testing.assertEquals("Exists", "AAA", tree.search("AAA"));
+		Testing.assertEquals("Exists", "BBB", tree.search("BBB"));
+		Testing.assertEquals("does not exist", null, tree.search("ZZZ"));
+		Testing.assertEquals("does not exist", null, tree.search("Ayyyy"));
+		Testing.assertEquals("does not exist", null, tree.search("CCCCC"));
+	}
+
+	
+	private static void testRemove() {
+		BinarySearchTree tree = fill();
+		System.out.println(tree.toString());
+		
+		tree.remove("CCB");
+		Testing.assertEquals("After removal with no kids", "((  AAA (  BBA ))  BBB ((  CAA )  CCC (  DDD )))", tree.toString());
+		
+		tree.remove("AAA");
+		Testing.assertEquals("After removal with one kid", "((  BBA )  BBB ((  CAA )  CCC (  DDD )))", tree.toString());
+		
+		tree.remove("CCC");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  BBB ((  CAA )  DDD ))", tree.toString());
+		
+		tree.insert("EEE", 12);
+		tree.remove("CAA");
+		Testing.assertEquals("After removal with no kids", "((  BBA )  BBB (  DDD (  EEE )))", tree.toString());
+
+//		tree.remove("BBB");
+//		Testing.assertEquals("After removal with no kids", "(  BBA  ( DDD  ( EEE )))", tree.toString());
+
+		
+		
+	}
+	
+	
+	private static BinarySearchTree fill() {
+		BinarySearchTree tree = new BinarySearchTree<String>();
+		tree.insert("BBB", 1);
+		tree.insert("CCC", 4);
+		tree.insert("DDD", 4);
+		tree.insert("AAA", 4);
+		tree.insert("BBA", 4);
+		tree.insert("CAA", 4);
+		tree.insert("CCB", 4);
+		return tree;
+		
+	}
+
+}

@@ -1,0 +1,26 @@
+
+// Don't forget the Javadocs!
+public class Plus implements Token
+{
+	
+	final static int PRECEDENCE=1;
+	
+    public String toString() {
+    	return "+";
+    }
+    
+    public String handle(Stack<Token> s)
+    {
+    	String toReturn="";
+    	
+    	while(!s.isEmpty() && s.peek().toString()!="(" && s.peek().getPrec()>=this.getPrec()) {
+    		
+    	}
+    	
+        return "erase this";
+    }
+    
+    public int getPrec() {
+    	return PRECEDENCE;
+    }
+}

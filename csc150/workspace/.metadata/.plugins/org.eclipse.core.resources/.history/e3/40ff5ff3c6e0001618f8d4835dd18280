@@ -1,0 +1,13 @@
+import deck;
+
+public class playGame {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		deck deck = new deck();
+
+	}
+
+}

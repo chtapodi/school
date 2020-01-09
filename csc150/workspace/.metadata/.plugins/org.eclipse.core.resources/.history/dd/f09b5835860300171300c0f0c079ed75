@@ -1,0 +1,63 @@
+/**
+ * Given an input text, goes though and indexs the words in the text. It does not index words that are too common.
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Indexer {
+	
+	private FileReader r;
+	private BinarySearchTree dictionary;
+	private BinarySearchTree Index;
+	private final int MIN_WORD_LENGTH=3;
+	
+	/**
+	 * Constructor for the indexer, which takes the source file as the input
+	 * @param text The source file.
+	 */
+	public Indexer(String text) {
+		r=new FileReader(text);
+		dictionary=new BinarySearchTree<String>();
+		Index=new BinarySearchTree<Document>();
+	}
+	
+	/**
+	 * Given the input text, returns 
+	 * @return
+	 */
+	private void interpret() {
+		int pageNumber=1;
+		String tmp = r.nextToken();
+		
+		while(!tmp.equals(null)) {
+			if(tmp.equals("#")) { //if end of page
+				pageNumber++;
+			}
+			else if (true) {
+				
+				
+				
+			}
+			
+			tmp=r.nextToken();
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * Returns the Document with the given word, or null if not found
+	 * @param word What to search the dictionary for
+	 * @return The document containing the word, or null
+	 */
+	private Document searchDictionary(String word) {
+		return (Document)dictionary.search(word);
+	}
+	
+	
+
+}

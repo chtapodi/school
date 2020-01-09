@@ -1,0 +1,9 @@
+NAME: BLE RSSI Dataset for Indoor localization and Navigation Data Set 
+# ATTRIBUTES: 15 
+# INSTANCES: 6611
+ATTRIBUTES: Location, Time, RSSI values from 13 beacons
+URL: https://archive.ics.uci.edu/ml/datasets/BLE+RSSI+Dataset+for+Indoor+localization+and+Navigation
+
+I will use this data to perform multilatteration to determine the location of whatever this data is in reference to.
+This is regression, but I think I will need to run the result through a formula to determine the error.
+I have previously done work in this field, and I can provide that to further explain what I plan to do if this description is not good enough.

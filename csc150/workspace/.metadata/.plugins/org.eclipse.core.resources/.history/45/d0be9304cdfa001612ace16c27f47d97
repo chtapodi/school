@@ -1,0 +1,42 @@
+/**
+ * This is just for figuring out the file reading, not used by the actual project.
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class FileReaderTester {
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		FileReader r= new FileReader("src/input.txt");
+		System.out.println(readLine(r));
+		System.out.println(readLine(r));
+		System.out.println(readLine(r));
+
+		
+		
+
+	}
+	
+	private static String readLine(FileReader reader) {
+		String toReturn="";
+		String tmp="";
+		
+		while(!tmp.equals(";")) { //While next is not EOF
+			tmp=reader.nextToken();
+			
+			if(!tmp.equals(";") && !tmp.equals("EOF")) {
+				toReturn+=tmp;
+			}
+		}
+		return toReturn;
+		
+	}
+
+}

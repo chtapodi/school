@@ -1,0 +1,57 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Document implements Comparable<Document>{
+
+	private String word;
+	private LinkedList<Integer> pages;
+	private final int MAX_PAGES=5;
+	
+	public Document(String toStore, int page) {
+		word=toStore;
+		pages.insertAt(0, page);
+	}
+	
+	/**
+	 * Adds an instance of the word, returns true if the instance has reached the limit
+	 * There will never be duplicate pages
+	 * @param page The page number
+	 * @return True or false based on if the max of this word has been reached
+	 */
+	public boolean addInstance(int page) {
+		if(pages.getData(0)!=page) { //If most recent page isn't the same as the new page
+			pages.insertAt(0, page);
+		}
+		
+		if(pages.getLength()>=MAX_PAGES) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * Returns the word of this document
+	 * @return The word
+	 */
+	public String getWord() {
+		return this.word;
+	}
+	
+	/**
+	 * Compares the words of the two documents
+	 * @param other The other document to be compared to 
+	 * @return <0 if smaller than other, 0 if other, >0 if greater
+	 */
+	public int compareTo(Document other) {
+		return this.word.compareTo(other.getWord());
+	}
+
+}

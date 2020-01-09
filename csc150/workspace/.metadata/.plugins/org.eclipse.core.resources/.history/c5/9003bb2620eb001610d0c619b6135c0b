@@ -1,0 +1,183 @@
+/**
+ *  I'd fill this in if I were you.
+ */
+public class SequenceTests {
+    
+    public static void main(String[] args)
+    {
+    	Testing.setVerbose(true); // use false for less testing output
+		Testing.startTests();
+
+    	testCreate();
+		testAdding();
+		testIsCurrent();
+	
+    	// add calls to more test methods here.
+    	// each of the test methods should be
+    	// a private static method that tests
+    	// one method in Sequence.
+	
+    	Testing.finishTests();
+    	
+    }
+    
+	private static void testCreate()
+	{
+		Testing.testSection("Creation tests and toString of empty sequence");
+		
+		Sequence s1 = new Sequence();
+		Testing.assertEquals("Default constructor", "{} (capacity = 10)", s1.toString());
+		Testing.assertEquals("Default constructor, initial size", 0, s1.size());
+		
+		Sequence s2 = new Sequence(20);
+		Testing.assertEquals("Non-default constructor", "{} (capacity = 20)", s2.toString());
+		Testing.assertEquals("Non-default constructor, initial size", 0, s2.size());
+	}
+	
+	
+	private static void testAdding() {
+		Testing.testSection("Tests addBefore");
+		
+		Sequence s1 = new Sequence();
+		s1.addBefore("one");
+		Testing.assertEquals("Tests if added before works", "{one} (capacity = 10)", s1.toString());
+		
+		s1.addAfter("two");
+		Testing.assertEquals("Tests if added after works", "{one, two} (capacity = 10)", s1.toString());
+		
+		s1.addBefore("three");
+		Testing.assertEquals("Tests if added after works", "{one, three, two} (capacity = 10)", s1.toString());
+		
+		
+	}
+
+	
+	private static void testIsCurrent() {
+		Testing.testSection("Tests isCurrent"); 
+		
+		Sequence s1 = new Sequence();
+		Testing.assertEquals("Tests if current exists, doesn't", false, s1.isCurrent());
+		
+		s1.addAfter("tmp");
+		Testing.assertEquals("Check if current exists, does", true, s1.isCurrent());
+		
+		
+	}
+	
+	private static void testGetCurrent() {
+		Testing.testSection("Tests getCurrent"); 
+		
+		Sequence s1 = new Sequence();
+		Testing.assertEquals("Gets current value when it doesn't exist", null, s1.getCurrent());
+		
+		s1.addAfter("tmp");
+		Testing.assertEquals("Gets current value", "tmp", s1.getCurrent());
+		
+	}
+
+	private static void testEnsureCapacity() {
+		Testing.testSection("Tests ensureCapacity"); 
+		
+		Sequence s1 = new Sequence();
+		s1.ensureCapacity(5);
+		Testing.assertEquals("Tests ensureCapacity when value is less than current", 10, s1.getCapacity());
+		
+		s1.ensureCapacity(15);
+		Testing.assertEquals("Tests ensureCapacity when value is less than current", 15, s1.getCapacity());
+		
+		
+	}
+	
+	private static void testAddAll_Clone() {
+		Testing.testSection("Tests addAll and Clone"); 
+		
+		Sequence s1 = new Sequence(3);
+		Sequence s2 = new Sequence(3);
+		
+		s1.addAfter("bob");
+		s1.addBefore("fred");
+		s1.addAfter("steve");
+		
+		s2=s1.clone();
+		Testing.assertEquals("Tests clone", s2.toString(), s1.toString());
+		
+		s1.addAll(s2);
+		Testing.assertEquals("Tests addAll", "{fred, bob, steve, fred, bob, steve} (capacity = 6)", s1.toString());
+		
+	}
+
+	
+	private static void testRemoveCurrent() {
+		Testing.testSection("Tests removeCurrent"); 
+		
+		Sequence s1 = new Sequence();
+		s1.addAfter("tmp");
+		s1.removeCurrent();
+		Testing.assertEquals("Tests removeCurrent", "{} (capacity = 6)", s1.toString());
+		
+	}
+	
+	private static void testStart() {
+		Testing.testSection("Tests start"); 
+		
+		Sequence s1 = new Sequence();
+		
+		s1.advance();
+		s1.addBefore("tmp");
+		s1.advance();
+		s1.start();
+		Testing.assertEquals("Tests start, should equal tmp", "tmp", s1.getCurrent());
+	}
+	
+	private static void testTrimToSize() {
+		Testing.testSection("Tests trimToSize"); 
+		
+		Sequence s1 = new Sequence();
+		
+		s1.addAfter("tmp");
+		s1.addBefore("tmp");
+		s1.trimToSize();
+		Testing.assertEquals("Tests trim to size of 2", 2, s1.getCapacity());
+		
+		
+	}
+	
+	private static void testEquals() {
+		Testing.testSection("Tests equals"); 
+		
+		Sequence s1 = new Sequence();
+		Sequence s2 = new Sequence();
+		
+		s1.addAfter("tmp");
+		s1.addBefore("first");
+		s2 = s1.clone();
+		Testing.assertEquals("Tests equals, should be true", true, s1.equals(s2));
+		
+		s1.addAfter("fred");
+		Testing.assertEquals("Tests equals, should be false", false, s1.equals(s2));
+		
+		
+		
+		
+	}
+	
+	private static void testIsEmpty() {
+		Testing.testSection("Tests isEmpty"); 
+		
+		Sequence s1 = new Sequence();
+		Testing.assertEquals("Tests if empty Sequence is empty", true, s1.isEmpty());
+		
+		s1.addAfter("tmp");
+		Testing.assertEquals("Tests if non-empty Sequence is empty", false, s1.isEmpty());
+		
+	}
+	
+	private static void testClear() {
+		Testing.testSection("Tests clear"); 
+		
+		Sequence s1 = new Sequence();
+		s1.addAfter("tmp");
+		
+		
+	}
+}

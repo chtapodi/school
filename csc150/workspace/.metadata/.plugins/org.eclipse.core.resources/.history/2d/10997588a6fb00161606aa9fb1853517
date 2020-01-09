@@ -1,0 +1,14 @@
+
+// Don't forget the Javadocs!
+public class LeftParen implements Token
+{
+	
+    public String toString() {
+    	return "erase this";
+    }
+    
+    public String handle(Stack<Token> s)
+    {
+        return "erase this";
+    }
+}

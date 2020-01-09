@@ -1,0 +1,59 @@
+/**
+ * Testing suite for BetterBag
+ * 
+ * @author Xavier Qunn, Chris Fernandes, and Matt Anderson
+ * *I affirm that I have carried out the attached 
+ *academic endeavors with full academic honesty, in
+ *accordance with the Union College Honor Code and
+ *the course syllabus.
+ */
+public class LinkedListTester {
+    
+    public static final boolean VERBOSE = true;
+    
+    /* Runs a bunch of tests for the BetterBag class.
+     * @param args is ignored
+     */
+    public static void main(String[] args)
+    {
+    	
+    Testing.setVerbose(true);
+	Testing.startTests();
+	
+	testInserts();
+	
+	
+	Testing.finishTests();
+	
+    }
+    
+//    private static void templateTester() {
+//    	Testing.testSection("Event Constructor test");
+//    	Testing.assertEquals("different years", 1, later.compareTo(earlier));
+//    }
+    
+   
+    
+    private static void testInserts() {
+    	Testing.testSection("Tests insertAtHead");
+    	LinkedList list=new LinkedList();
+    	LinkedList list2=new LinkedList();
+    	
+    	list.insertAtHead("One");
+    	
+    	Testing.assertEquals("First Insertion at head", "(One)", list.toString());
+    	
+    	list.insertAtHead("Two");
+    	
+    	Testing.assertEquals("Second Insertion at head", "(Two, One)", list.toString());
+    	
+    	list.insertAtTail("Three");
+    	
+    	Testing.assertEquals("Third Insertion at tail", "(Two, One, Three)", list.toString());
+    	
+    	list2.insertAtTail("Four");
+    	Testing.assertEquals("New Insertion at tail", "(Four)", list2.toString());
+    }
+    
+    
+}

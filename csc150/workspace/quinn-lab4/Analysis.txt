@@ -1,0 +1,34 @@
+1:
+The shuffle method for this is much more effective, as it doesnt have to actually move around any information.
+I don't remember the term used, but this method only does one operation for each card left in the deck, so as the game goes on it gets more efficient, but the previous one did it all at once and did hundreds of operations at the begining.
+
+	public void shuffle() {
+		dealer=0;
+
+		for(int i=0;i<=51;i++){
+			int randomval = Random.nextInt(51);
+			card firstarr = deck[i];
+			card secondarr = deck[randomval];
+			deck[i] = secondarr;
+			deck[randomval] = firstarr;
+		}	
+	}
+
+
+2: 
+I The deal method itself is more complex, but the way it works is more efficient as it doesnt have an itterator and it deletes used memory as it goes along.
+
+	public int deal() {
+		int returnval=deck[dealer].getsuite();
+		dealer++;
+		return returnval;
+		
+	}
+	
+	
+3:
+a)
+	To print the order of the deck the locations of each of the cards would have to be stored somewhere so the indexes could be accessed.
+
+b)
+	You would have to deleted the indexes for each card you dealt, which would be difficult and wasteful.

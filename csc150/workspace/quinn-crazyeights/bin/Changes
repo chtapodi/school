@@ -1,0 +1,14 @@
+Xavier Quinn
+
+Card:
+
+Made a second constructor and changed all the variables to private
+I changed some variable names to have proper camelCase
+
+Deck:
+
+Moved the random constructor into the shuffle method as it wasnt neccisary elsewhere.
+I had an annoying amount of magic numbers, which I have fixed. In doing this I have fixed the way the itterators work so they will work with larger deck sizes
+I also fixed the naming convention and changed suites 
+
+Hand to change what is returned because I only worried about suites in the last itteration.

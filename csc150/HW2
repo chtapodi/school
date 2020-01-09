@@ -1,0 +1,46 @@
+Xavier Quinn
+
+I affirm that I have carried out the attached academic endeavors
+with full academic honesty, in accordance with the Union College
+Honor Code and the course syllabus.
+
+1
+
+	a) 5 and 11
+
+	b) It should be at index 45 because you find the left child at 2*current_index and the right child at 2*current_index+1
+
+	c) The height should be 8
+
+	d) 7,8,5,10,12,4,3,13
+
+	e) 11,5,8,9,7,6
+
+	f) 13,3,1,2,1,3,4,12,10,5,8,7,6,7,8,9,8,5,10,11,10,12,4,3,13,14,18,14,13 (if you recount passing through nodes in the returns)
+
+	g) I'm not really sure what this question is asking, but if I understand it correctly: left children then right children.
+
+2
+	
+	/**
+	*Finds the number of leaves in a tree
+	@return the number of leaves
+	**/
+	public int numLeaves() {
+		return numLeaves(root);
+	}
+	/**
+	*FInds the number of leaves in a tree
+	*@param the node to start at, usually root
+	**/
+	private int numLeaves(BSTNode<E> node) {
+		if(node==null) {
+			return 0;
+		}
+		else if(node.rLink==null && node.lLink==null) {
+			return 1;
+		}
+		else {
+			return numLeaves(node.lLink) + numLeaves(node.rLink);
+		}
+	}

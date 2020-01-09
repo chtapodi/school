@@ -1,0 +1,28 @@
+
+public class deck {
+	
+	card[] deck = new card[52];
+	
+	deck() {
+		int deckitterator=0;
+		
+		
+		for(int i=0;i<=3;i++) {
+			for(int j=0;i<=12;j++) {
+				deck[deckitterator] = new card(i,j);
+				deckitterator++;
+			}
+		}
+		
+	}
+	
+	
+	public String tostring() {
+		String alldeck = "The current deck:\n";
+		for(int i=0;i<=51;i++){
+			alldeck = alldeck + deck[i].toString() + "\n";
+		}
+		return alldeck;
+	}
+
+}

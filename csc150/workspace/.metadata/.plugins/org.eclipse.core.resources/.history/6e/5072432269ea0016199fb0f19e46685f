@@ -1,0 +1,33 @@
+/**
+ *  I'd fill this in if I were you.
+ */
+public class SequenceTests {
+    
+    public static void main(String[] args)
+    {
+    	Testing.setVerbose(true); // use false for less testing output
+		Testing.startTests();
+
+    	testCreate();
+	
+    	// add calls to more test methods here.
+    	// each of the test methods should be
+    	// a private static method that tests
+    	// one method in Sequence.
+	
+    	Testing.finishTests();
+    }
+    
+	private static void testCreate()
+	{
+		Testing.testSection("Creation tests and toString of empty sequence");
+		
+		Sequence s1 = new Sequence();
+		Testing.assertEquals("Default constructor", "{} (capacity = 10)", s1.toString());
+		Testing.assertEquals("Default constructor, initial size", 0, s1.size());
+		
+		Sequence s2 = new Sequence(20);
+		Testing.assertEquals("Non-default constructor", "{} (capacity = 20)", s2.toString());
+		Testing.assertEquals("Non-default constructor, initial size", 0, s2.size());
+	}
+}

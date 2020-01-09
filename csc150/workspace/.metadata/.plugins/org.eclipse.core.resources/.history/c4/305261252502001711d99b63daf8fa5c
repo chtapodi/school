@@ -1,0 +1,307 @@
+/**
+ * This is the BST ADT. It should contain methods that allow it to insert new
+ * nodes, delete nodes, search, etc. You'll be adding code to this class for
+ * this lab.
+ * 
+ * 
+ * 
+ * @author Xavier
+ * @version 03.02.17
+ */
+public class BinarySearchTree<E extends Comparable<E>> {
+	private BSTNode<E> root;
+
+
+	
+	/**
+	 * Default constructor for BST
+	 */
+	public BinarySearchTree() {
+		root=null;
+	}
+	
+	/**
+	 * Removes the node with the given data and restructures the tree 
+	 * accordingly
+	 * @param toRemove The data you want to remove.
+	 */
+	public void remove(E toRemove) {
+		remove(root, toRemove);
+	}
+	
+	/**
+	 * Removes the node with the given data and restructures the tree
+	 * @param node The node to start at, usually root
+	 * @param toRemove The data you want to remove
+	 * @return The removed node.
+	 */
+	private void remove(BSTNode<E> node, E toRemove) {
+		BSTNode parent=findParent(toRemove);
+		
+		if(parent.lLink!=null && parent.lLink.key.compareTo(toRemove)==0) {
+			parent.lLink=removeSwap(parent.lLink);
+		}
+		else if(parent.rLink!=null && parent.rLink.key.compareTo(toRemove)==0) {
+			parent.rLink=removeSwap(parent.rLink);
+		}
+	}
+	
+	
+	/**
+	 * does the necessary steps to replace the given node and returns the link
+	 * to the replacement tree
+	 * @param victim The node the replace
+	 * @return The tree
+	 */
+	private BSTNode removeSwap(BSTNode victim) {
+		int num=numChildren(victim);
+		if(num==1) {
+			if(victim.rLink!=null) {
+				return victim.rLink;
+			}
+			else {
+				return victim.lLink;
+			}
+		}
+		else if(num==2) {
+			
+			
+			return handleSuccesor(victim);
+		}
+		else {
+			return null;
+		}
+	}
+	
+
+	
+	private BSTNode handleSuccesor(BSTNode start) {
+		BSTNode parent;
+		BSTNode chosen;
+		
+		if(start.rLink.lLink!=null) { //if there is a left link to the starts right link
+			parent=findMinParent(start.rLink);
+			chosen=parent.lLink;
+			if(chosen.rLink!=null) { //If in order successor from left has any children, move them up
+				parent.lLink=chosen.rLink;
+			}
+			else {
+				parent.lLink=null;
+			}
+		}
+		else {
+			chosen=start.rLink;
+			start.rLink=chosen.rLink;
+			
+		}
+
+		chosen.rLink=start.rLink;
+		chosen.lLink=start.lLink;
+		
+		return chosen;
+		
+	}
+	
+	private BSTNode findMinParent(BSTNode start) {
+		if(start.lLink.lLink==null) {
+			return start;
+		}
+		else {
+			return findMinParent(start.lLink);
+		}
+	}
+	
+	/**
+	 * Returns the number of children a node has. 
+	 * @param toCheck
+	 * @return
+	 */
+	private int numChildren(BSTNode toCheck) {
+		if(toCheck.lLink==null && toCheck.rLink==null) {
+			return 0;
+		}
+		else if(toCheck.lLink!=null && toCheck.rLink!=null) {
+			return 2;
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	/**
+	 * Finds the parent of the node with the given data
+	 * @param toRemove The data you want to remove
+	 * @return The parent of the node with the found data
+	 */
+	public BSTNode findParent(E toRemove) {
+		return findParent(root, toRemove);
+	}
+	
+	/**
+	 * Finds the parent of the given node.
+	 * @param node The node to start at, generally root
+	 * @param toRemove The data in the node you want to remove
+	 * @return Returns the parent of the given node.
+	 */
+	private BSTNode findParent(BSTNode node, E toRemove) {
+		
+		if(node==null) {
+			return null;
+		}
+		else if (node.lLink == null && node.rLink==null) {
+			return null;
+		}
+		else if (node.lLink != null && node.lLink.key.compareTo(toRemove) == 0) {
+			return node;
+		}
+		else if (node.rLink != null && node.rLink.key.compareTo(toRemove) == 0) {
+			return node;
+		}
+		
+		else {
+			BSTNode left = findParent(node.lLink, toRemove);
+			BSTNode right = findParent(node.rLink, toRemove);
+
+			if (left != null) {
+				return left;
+			} else {
+				return right;
+			}
+		}
+	}
+	
+	
+	/**
+	 * Inserts information into the tree
+	 * @param newValue
+	 */
+	public void insert(E newValue, int pageNumber) {
+		root = insert(root,newValue, pageNumber);
+	}
+	
+	/**
+	 * Inserts the given data into the tree
+	 * 
+	 * @param whatever you want to put in the tree
+	 * @return The new tree with the inserted node
+	 **/
+	public BSTNode insert(BSTNode<E> node, E data, int pageNumber) {
+		if (node == null) {
+			return new BSTNode<E>(data, pageNumber);           
+		} 
+		else if ( data.compareTo(node.key) > 0 ) { 
+			node.rLink = insert(node.rLink, data, pageNumber);
+			return node;
+		} 
+		else if (data.compareTo(node.key)==0) {
+			node.pageInsert(pageNumber);
+			return root;
+		}
+		else {
+			node.lLink = insert(node.lLink, data, pageNumber); 
+			return node;   
+		} 
+	}
+
+	
+
+	/**
+	 * Searches for a node with specific data and returns it. Returns null if
+	 * its not found.
+	 * 
+	 * @param node
+	 *            The node to start at (usually root)
+	 * @param value
+	 *            The data that you're looking for
+	 * @return The node, or null
+	 */
+	private BSTNode<E> search(BSTNode<E> node, E value) {
+
+		if (node == null) {
+			return null;
+		}
+
+		if (node.key.compareTo(value) == 0) {
+			return node;
+		} else {
+			BSTNode left = search(node.lLink, value);
+			BSTNode right = search(node.rLink, value);
+
+			if (left != null) {
+				return left;
+			} else {
+				return right;
+			}
+		}
+	}
+
+	/**
+	 * Searches for some data and returns its node, or null if the node is not
+	 * found
+	 * 
+	 * @param data
+	 *            Whatever you want to find
+	 * @return The node, or null
+	 */
+	public BSTNode search(E data) {
+		return search(root, data);
+	}
+
+	
+	
+	/**
+	 * Counts how many nodes there are in the tree
+	 * 
+	 * @return Number of nodes in the tree
+	 */
+	public int getSize() {
+		return getSize(root);
+	}
+	
+	/**
+	 * 
+	 * @param N The node to start at, usually room
+	 * @return The size of the tree
+	 */
+	private int getSize(BSTNode N) {
+		if (N==null) {
+			return 0;
+		}
+		else {
+			return getSize(N.lLink) + getSize(N.rLink) + 1;
+		}
+	}
+
+	
+	
+	/**
+	 * A general toString method
+	 * 
+	 * @return a string off the entire tree including parens to denote children
+	 */
+	public String toString() {
+		return stringNodes(root);
+	}
+
+	/**
+	 * Returns a string off the entire tree including parens to denote children
+	 * 
+	 * @param N
+	 *            the node to start at (usually root)
+	 * @return The string version of all the nodes.
+	 */
+	private String stringNodes(BSTNode<E> N) {
+		String toReturn = "";
+		if (N != null) {
+			toReturn += "(";
+			toReturn += stringNodes(N.lLink);
+			toReturn += "  " + N.key + " ";
+			toReturn += stringNodes(N.rLink);
+			toReturn += ")";
+
+		}
+		return toReturn;
+	}
+	
+	
+}

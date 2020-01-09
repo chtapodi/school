@@ -1,0 +1,40 @@
+/* Class to analyze simulated purchase trends from a department store.
+ * 
+ */
+public class Analyzer {
+	
+	public void storeInformation()
+	{
+		
+	}
+	
+	public void purchaseAnalyzer(double[] purchase, double min, double max)
+	{
+		
+	}
+	
+	public void inDepthAnalyzer(double[] purchase, double min, double max)
+	{
+		
+	}
+	
+	/** a really dumb way of printing the entire array
+	 * 
+	 *  purchase is a chronological collection of purchases
+	 */
+	public void printer(double[] purchase)
+	{
+		System.out.println();
+		System.out.println("purchase[0]: " + purchase[0]);
+		System.out.println("purchase[1]: " + purchase[1]);
+		System.out.println("purchase[2]: " + purchase[2]);
+		System.out.println("purchase[3]: " + purchase[3]);
+		System.out.println("purchase[4]: " + purchase[4]);
+		System.out.println("purchase[5]: " + purchase[5]);
+		System.out.println("purchase[6]: " + purchase[6]);
+		System.out.println("purchase[7]: " + purchase[7]);
+		System.out.println("purchase[8]: " + purchase[8]);
+		System.out.println("purchase[9]: " + purchase[9]);
+	}
+	
+}

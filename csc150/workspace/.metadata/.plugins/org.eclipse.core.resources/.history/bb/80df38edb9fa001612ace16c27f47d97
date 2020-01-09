@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+
+/**
+ * @author xavier
+ * 
+ */
+public class Converter {
+
+	/**
+	 * 
+	 */
+	public Converter() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void convert() {
+		
+		
+	}
+
+}

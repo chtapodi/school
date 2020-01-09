@@ -1,0 +1,41 @@
+
+/**
+ * A token for semicolor
+ * @author xavier
+ *
+ */
+public class SemiColon implements Token
+{
+	
+	final static int PRECEDENCE=1;
+	
+	/**
+	 * @return a string of the token
+	 */
+    public String toString() {
+    	return "+";
+    }
+    
+    /**
+     * Handles the token based on what it is
+     * @param s Is the stack the token will handle itself with
+     * @returns the new string of handled tokens
+     */
+    public String handle(Stack<Token> s)
+    {
+    	String toReturn="";
+    	
+    	for(int i=0;i<s.size();i++) {
+    		toReturn+=s.pop().toString();
+    	}
+    	
+        return toReturn;
+    }
+    
+    /**
+     * @return The precedence of the token
+     */
+    public int getPrec() {
+    	return PRECEDENCE;
+    }
+}

@@ -1,0 +1,538 @@
+
+public class ChrisTest{
+	public static final boolean VERBOSE = false;
+	public static void main(String[] args)
+	{
+		System.out.println("Starting Tests");
+
+		testCreate();
+		testAddBefore();
+		testAddBeforeAndGrow();
+		testGetCurrent();
+		testisEmpty();
+		testAdvance();
+		testIsCurrent();
+		testAddAfter();
+		testAddAfterAndGrow();
+		testStart();
+		testClear();
+		testEnsureCapacity();
+		testTrimToSize();	
+		testRemoveCurrent();
+		testClone();
+		testEquals();
+		testAddAll();
+		System.out.println("Tests Complete");
+	}
+	
+	public static void testCreate()
+	{
+		testsSection("Creation tests and toString of empty sequence");
+		
+		Sequence s1 = new Sequence();
+		assertEquals("Default constructor", "{} (capacity = 10)", s1.toString());
+		assertEquals("Default constructor, initial size", 0, s1.size());
+		
+		Sequence s2 = new Sequence(20);
+		assertEquals("Non-default constructor", "{} (capacity = 20)", s2.toString());
+		assertEquals("Non-default constructor, initial size", 0, s2.size());
+	}
+	
+	public static void testAddBefore()
+	{
+		testsSection("Testing addBefore and toString of non-empty sequence");
+		
+		Sequence s1 = new Sequence();
+		s1.addBefore("A");
+		assertEquals("Added A to empty sequence", "{>A} (capacity = 10)", s1.toString());	
+		assertEquals("A should be current after being added to empty sequence", "A", s1.getCurrent());
+		
+		s1.addBefore("B");
+		assertEquals("Added B to {>A}", "{>B, A} (capacity = 10)", s1.toString());
+		assertEquals("B should be current after being added to {>A}", "B", s1.getCurrent());
+		
+		s1.advance();
+		assertEquals("After advance({>B, A})", "{B, >A} (capacity = 10)", s1.toString());
+		assertEquals("A should be current after advance({>B, A})", "A", s1.getCurrent());
+	}
+
+	public static void testAddBeforeAndGrow()
+	{
+		testsSection("Testing addBefore when we need to grow");
+		
+		Sequence s1 = new Sequence(2);
+		s1.addBefore("A");
+		assertEquals("Added A to empty sequence", "{>A} (capacity = 2)", s1.toString());	
+		assertEquals("A should be current after being added to {}", "A", s1.getCurrent());
+		
+		s1.addBefore("B");
+		assertEquals("Added B to {>A}", "{>B, A} (capacity = 2)", s1.toString());
+		assertEquals("B should be current after being added to {>A}", "B", s1.getCurrent());
+
+		s1.addBefore("C");
+		assertEquals("Added C before {>B, A}", "{>C, B, A} (capacity = 5)", s1.toString());
+		assertEquals("C should be current after being added to {>B, A}", "C", s1.getCurrent());
+		assertEquals("Capacity should be 5 after adding before a full 2 element sequence", 5, s1.getCapacity());
+	}
+		
+	public static void testGetCurrent(){
+		testsSection("Testing getCurrent()");
+		
+		Sequence s1 = new Sequence();
+		assertEquals("no current elmt should return null", null, s1.getCurrent());
+	}
+	
+	public static void testisEmpty()
+	{
+		testsSection("Testing isEmpty()");
+		
+		Sequence s1 = new Sequence();
+		assertEquals("on empty sequence", true, s1.isEmpty());
+		
+		Sequence s2 = new Sequence(20);
+		s2.addBefore("C");
+		s2.addBefore("B");
+		assertEquals("on non-empty sequence", false, s2.isEmpty());
+		
+		s2 = new Sequence(20);
+		s2.addBefore("C");
+		s2.advance();
+		assertEquals("on non-empty sequence with no current", false, s2.isEmpty());
+	}
+	
+	public static void testAdvance()
+	{
+		testsSection("Testing advance()");
+		
+		Sequence s1 = new Sequence(5);
+		s1.addBefore("C");
+		s1.addBefore("B");
+		s1.addBefore("A");
+		
+		s1.advance();
+		assertEquals("advance() once on a 3 element sequence", "{A, >B, C} (capacity = 5)", s1.toString());
+		s1.advance();
+		assertEquals("advance() twice on a 3 element sequence", "{A, B, >C} (capacity = 5)", s1.toString());
+		s1.advance();
+		assertEquals("advance() three times on a 3 element sequence", "{A, B, C} (capacity = 5)", s1.toString());
+		assertEquals("should have no current after advance()", null, s1.getCurrent());	
+	}
+	
+	public static void testIsCurrent(){
+		testsSection("Testing isCurrent()");
+		
+		Sequence s1 = new Sequence();
+		assertEquals("no current elmt for empty sequence", false, s1.isCurrent());
+		
+		s1 = new Sequence();
+		s1.addBefore("A");
+		assertEquals("there is a current right after adding", true, s1.isCurrent());
+		
+		s1 = new Sequence();
+		s1.addBefore("A");
+		s1.advance();
+		assertEquals("advance so no current anymore", false, s1.isCurrent());
+	}
+	
+	public static void testAddAfter()
+	{
+		testsSection("Testing addAfter()");
+		
+		Sequence s1 = new Sequence();
+		s1.addAfter("A");
+		assertEquals("Added A to empty sequence", "{>A} (capacity = 10)", s1.toString());	
+		assertEquals("A should be current after being added to empty sequence", "A", s1.getCurrent());
+		assertEquals("Size should be 1 after addAfter to an empty sequence", 1, s1.size());
+		
+		s1 = new Sequence();
+		s1.addBefore("A");
+		s1.addAfter("B");
+		assertEquals("Added B to {>A}", "{A, >B} (capacity = 10)", s1.toString());
+		assertEquals("B should be current after being added to {>A}", "B", s1.getCurrent());
+	}
+
+	public static void testAddAfterAndGrow()
+	{
+		testsSection("Testing addAfter when we need to grow");
+		
+		Sequence s1 = new Sequence(2);
+		s1.addAfter("A");
+		assertEquals("Added A to empty sequence", "{>A} (capacity = 2)", s1.toString());	
+		
+		s1 = new Sequence(2);
+		s1.addBefore("A");
+		s1.addAfter("B");
+		assertEquals("Added B to {>A}", "{A, >B} (capacity = 2)", s1.toString());
+		assertEquals("B should be current after being added to {>A}", "B", s1.getCurrent());
+
+		s1 = new Sequence(2);
+		s1.addBefore("B");
+		s1.addBefore("A");
+		s1.addAfter("C");
+		assertEquals("Added C to {>A, B}", "{A, >C, B} (capacity = 5)", s1.toString());
+		assertEquals("C should be current after being added to {>A, B}", "C", s1.getCurrent());
+		assertEquals("Capacity should have increase to 5 after addAfter", 5, s1.getCapacity());
+
+	}
+	
+	public static void testStart()
+	{
+		testsSection("Testing start()");
+		
+		Sequence s1 = new Sequence();
+		s1.start();
+		assertEquals("Empty sequence should not have current", false, s1.isCurrent());
+		
+		Sequence s2 = new Sequence(5);
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s2.addAfter("C");
+		
+		s2.start();
+		assertEquals("start() on a 3 element sequence", "{>A, B, C} (capacity = 5)", s2.toString());
+	}
+	
+	public static void testClear()
+	{
+		testsSection("Testing clear()");
+		
+		Sequence s1 = new Sequence(5);
+		s1.clear();
+		assertEquals("clear an empty sequence", "{} (capacity = 5)", s1.toString());
+		
+		Sequence s2 = new Sequence(7);
+		s2.addBefore("C");
+		s2.addBefore("B");
+		s2.clear();
+		assertEquals("clear non-empty sequence", "{} (capacity = 7)", s2.toString());
+	}
+	
+	public static void testEnsureCapacity()
+	{
+		testsSection("Testing ensureCapacity()");
+		
+		Sequence s1 = new Sequence(2);
+		s1.addBefore("A");
+		s1.ensureCapacity(4);
+		assertEquals("ensureCapacity(4) should change capacity to 4", 4, s1.getCapacity());
+		assertEquals("sequence contents should not change", "{>A} (capacity = 4)", s1.toString());
+		
+		Sequence s2 = new Sequence(4);
+		s2.ensureCapacity(3);
+		assertEquals("ensureCapacity(3) should not change capacity (it's already 4)", 4, s2.getCapacity());
+	}
+
+	public static void testTrimToSize()
+	{
+		testsSection("Testing trimToSize()");
+		
+		Sequence s1 = new Sequence(2);
+		s1.trimToSize();
+		assertEquals("trim an empty seq results in 0 capacity", 0, s1.getCapacity());
+		
+		Sequence s2 = new Sequence(15);
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s2.trimToSize();
+		assertEquals("trimToSize({A, >B}) should result in 2 capacity", 2, s2.getCapacity());
+		assertEquals("sequence contents should not change", "{A, >B} (capacity = 2)", s2.toString());
+	}
+	
+	public static void testRemoveCurrent()
+	{
+		testsSection("Testing removeCurrent()");
+		
+		Sequence s1 = new Sequence(5);
+		s1.removeCurrent();
+		assertEquals("Removing from an empty sequence should have no effect", "{} (capacity = 5)", s1.toString());
+		
+		Sequence s2 = new Sequence(5);
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s2.advance();
+		s2.removeCurrent();
+		assertEquals("Removing from a sequence with no current should have no effect", "{A, B} (capacity = 5)", s2.toString());
+		
+		s1 = new Sequence(5);
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s1.removeCurrent();
+		assertEquals("Removing from {A, >B}", "{A} (capacity = 5)", s1.toString());
+		assertEquals("Removing from {A, >B} should result in no current", null, s1.getCurrent());
+		
+		s1 = new Sequence(5);
+		s1.addBefore("A");
+		s1.addBefore("B");
+		s1.addBefore("C");
+		s1.removeCurrent();
+		assertEquals("Removing from {>C, B, A}", "{>B, A} (capacity = 5)", s1.toString());
+		
+		s1 = new Sequence(5);
+		s1.addBefore("C");
+		s1.addBefore("A");
+		s1.addAfter("B");
+		s1.removeCurrent();
+		assertEquals("Removing from {A, >B, C}", "{A, >C} (capacity = 5)", s1.toString());
+	}
+	
+	public static void testClone()
+	{
+		testsSection("Testing clone()");
+		
+		Sequence s1 = new Sequence(3);
+		
+		Sequence s2 = s1.clone();
+		assertEquals("cloning an empty sequence", "{} (capacity = 3)", s2.toString());
+		
+		s1 = new Sequence(3);
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s1.addAfter("C");
+		s2 = s1.clone();
+		assertEquals("cloning {A, B, >C}", "{A, B, >C} (capacity = 3)", s2.toString());
+		assertEquals("cloning {A, B, >C} should produce a different object.  Does (s2 != s1)", true, (s2 != s1));
+		
+		s1 = new Sequence(7);
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s1.addAfter("C");
+		s2 = s1.clone();
+		s1.addAfter("D");
+		assertEquals("clone shouldn't change after adding to original", "{A, B, >C} (capacity = 7)", s2.toString());
+		assertEquals("original should change after cloning & adding to original", 
+				"{A, B, C, >D} (capacity = 7)", s1.toString());
+		
+		s1 = new Sequence(5);
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s1.addAfter("C");
+		s1.addAfter("D");
+		s2 = s1.clone();
+		s2.addAfter("E");
+		assertEquals("original shouldn't change after adding to clone", "{A, B, C, >D} (capacity = 5)", s1.toString());
+		assertEquals("clone should change after cloning & adding to clone", 
+				"{A, B, C, D, >E} (capacity = 5)", s2.toString());
+	}
+	
+	public static void testEquals()
+	{
+		testsSection("Testing equals()");
+		
+		Sequence s1 = new Sequence();
+		Sequence s2 = new Sequence(3);
+		
+		assertEquals("empty sequences should be equal (A=B)", true, s1.equals(s2));
+		assertEquals("empty sequences should be equal (B=A)", true, s2.equals(s1));
+		assertEquals("sequence should be equal to itself", true, s1.equals(s1));
+		
+		s1.addAfter("A");
+		assertEquals("non-empty sequence should not be equal to empty sequence", false, s1.equals(s2));
+		assertEquals("empty sequence should not be equal to a non-empty sequence", false, s2.equals(s1));
+		
+		s2.addAfter("A");
+		assertEquals("2 sequences with {A} should be equal, even with different capacities", true, s1.equals(s2));
+		
+		s1 = new Sequence(3);
+		s2 = new Sequence(3);
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s1.addAfter("B");
+		assertEquals("different-sized sequences", false, s1.equals(s2));
+		
+		s1 = new Sequence(3);
+		s2 = new Sequence(3);
+		s2.addAfter("A");
+		s2.addAfter("C");
+		s1.addAfter("A");
+		s1.addAfter("B");
+		assertEquals("same size but not equal sequences", false, s1.equals(s2));
+		
+		s1 = new Sequence(3);
+		s2 = new Sequence(3);
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s1.addAfter("B");
+		s1.addAfter("A");
+		s1.start();
+		assertEquals("same size, same current *element*, but different order", false, s1.equals(s2));
+		
+		s1 = new Sequence(3);
+		s2 = new Sequence(3);
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s1.addAfter("B");
+		s1.addAfter("A");
+		assertEquals("same size, same current *index*, but different order", false, s1.equals(s2));
+		
+		s1 = new Sequence(3);
+		s2 = new Sequence(3);
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s2.addAfter("A");
+		s2.addAfter("B");
+		s1.start();
+		assertEquals("2 sequence with same values but different current element should not be equal", false, s1.equals(s2));
+		assertEquals("2 sequence with same values but different current element should not be equal", false, s2.equals(s1));
+		
+		s1.advance();
+		assertEquals("2 sequences that should now have same elements and current element -- are they equal?", true, s1.equals(s2));
+		assertEquals("2 sequences that should now have same elements and current element -- are they equal?", true, s2.equals(s1));
+	}
+		
+	public static void testAddAll()
+	{
+		testsSection("Testing addAll()");
+		
+		// add empty to empty
+		Sequence empty1 = new Sequence();
+		Sequence empty2 = new Sequence();
+		empty1.addAll(empty2);
+		assertEquals("Added {} to {}", "{} (capacity = 10)", empty1.toString());
+		assertEquals("Added {} to {}, size should be 0", 0, empty1.size());
+		assertEquals("Added {} to {}, current should still be null", null, empty1.getCurrent());
+		assertEquals("Added {} to {}, addend shouldn't change", "{} (capacity = 10)", empty2.toString());
+		
+		// add empty to non-empty
+		empty1 = new Sequence();
+		Sequence s1 = new Sequence();
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s1.addAll(empty1);
+		assertEquals("Added {} to {A, >B}", "{A, >B} (capacity = 10)", s1.toString());
+		assertEquals("Added {} to {A, >B}, size should be 2", 2, s1.size());
+		assertEquals("Added {} to {A, >B}, current should still be B", "B", s1.getCurrent());
+		assertEquals("Added {} to {A, >B}, addend shouldn't change", "{} (capacity = 10)", empty1.toString());
+		
+		// add non-empty to empty
+		empty1 = new Sequence();
+		s1 = new Sequence();
+		s1.addAfter("A");
+		s1.addAfter("B");
+		empty1.addAll(s1);
+		assertEquals("Added {A, >B} to {}", "{A, B} (capacity = 10)", empty1.toString());
+		assertEquals("Added {A, >B} to {}, size should be 2", 2, empty1.size());
+		assertEquals("Added {A, >B} to {}, current should still be null", null, empty1.getCurrent());
+		assertEquals("Added {A, >B} to {}, addend shouldn't change", "{A, >B} (capacity = 10)", s1.toString());
+		
+		// add two non-empty
+		s1 = new Sequence();
+		s1.addAfter("A");
+		s1.addAfter("B");
+		Sequence s2 = new Sequence();
+		s2.addAfter("C");
+		s1.addAll(s2);
+		assertEquals("Added {>C} to {A, >B}", "{A, >B, C} (capacity = 10)", s1.toString());
+		assertEquals("Added {>C} to {A, >B}, size should be 3", 3, s1.size());
+		assertEquals("Added {>C} to {A, >B}, current should still be B", "B", s1.getCurrent());
+		assertEquals("Added {>C} to {A, >B}, addend shouldn't change", "{>C} (capacity = 10)", s2.toString());
+		
+		// add two non-empty when cap should grow
+		s1 = new Sequence(2);
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s2 = new Sequence(1);
+		s2.addAfter("C");
+		s1.addAll(s2);
+		assertEquals("Added {>C} to {A, >B} (cap may be different)", "{A, >B, C} (capacity = 5)", s1.toString());
+		assertEquals("Added {>C} to {A, >B}, size should be 3", 3, s1.size());
+		assertEquals("Added {>C} to {A, >B}, current should still be B", "B", s1.getCurrent());
+		assertEquals("Added {>C} to {A, >B}, addend shouldn't change", "{>C} (capacity = 1)", s2.toString());
+		
+		// add to a non-empty sequence with no current
+		s1 = new Sequence();
+		s1.addAfter("A");
+		s1.addAfter("B");
+		s1.advance();
+		s2 = new Sequence(3);
+		s2.addAfter("C");
+		s2.addAfter("D");
+		s1.addAll(s2);
+		assertEquals("Added {C, >D} to {A, B}", "{A, B, C, D} (capacity = 10)", s1.toString());
+		assertEquals("Added {C, >D} to {A, B}, size should be 4", 4, s1.size());
+		assertEquals("Added {C, >D} to {A, B}, current should still be null", null, s1.getCurrent());
+		assertEquals("Added {C, >D} to {A, B}}, addend shouldn't change", "{C, >D} (capacity = 3)", s2.toString());
+	}
+	
+
+
+	/***********  TESTING TOOLS ****************/
+	
+	
+	public static void assertEquals(String message, boolean expected, boolean actual)
+	{
+		printTestCaseInfo(message, "" + expected, "" + actual);
+		if (expected == actual) {
+			pass();
+		} else {
+			fail(message);
+		}
+	}
+
+	
+	public static void assertEquals(String message, int expected, int actual)
+	{
+		printTestCaseInfo(message, "" + expected, "" + actual);
+		if (expected == actual) {
+			pass();
+		} else {
+			fail(message);
+		}
+	}
+	
+	public static void assertEquals(String message, String expected, String actual)
+	{
+		printTestCaseInfo(message, expected, actual);
+		
+		if (expected == null) {
+			if (actual == null) {
+				pass();
+			} else {
+				fail(message);
+			}
+		} else if (expected.equals(actual)) {
+			pass();
+		} else {
+			fail(message);
+		}
+		
+	}
+	
+	public static void printTestCaseInfo(String message, String expected, String actual)
+	{
+		if (VERBOSE) {
+			System.out.println(message + ":");
+			System.out.println("expected: " + expected);
+			System.out.println("actual:   " + actual);
+		}
+	}
+	
+	public static void pass()
+	{
+		if (VERBOSE) {
+			System.out.println("PASS");
+			System.out.println();
+		}
+	}
+	
+	public static void fail(String description)
+	{
+		if (!VERBOSE) {
+			System.out.print(description + "  ");
+		}
+		System.out.println("*******########## FAIL");
+		System.out.println();
+	}
+	
+	public static void testsSection(String sectionTitle)
+	{
+		if (VERBOSE) {
+			int dashCount = sectionTitle.length();
+			System.out.println(sectionTitle);
+			for (int i = 0; i < dashCount; i++) {
+				System.out.print("-");
+			}
+			System.out.println();
+			System.out.println();
+		}
+	}
+}

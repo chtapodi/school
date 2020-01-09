@@ -1,0 +1,58 @@
+
+public class card {
+	
+	
+	int suite;
+	int value;
+	/**
+	 * This constructor creates a new card with given values.
+	 * @param setsuite The suite that this card will be
+	 * @param setvalue The value this card will have
+	 */
+	
+	public card(int setsuite, int setvalue) {
+		value=setvalue;
+		suite=setsuite;
+		
+		
+	}
+	
+	/**
+	 * This returns the information on the card in a printable string
+	 * I know you said to never use breaks, but hopefully this is an exception 
+	 * because the switch() method required that you use breaks and I think 
+	 * this is the most efficient way to go about it
+	 * @returns a string of the card data
+	 */
+	
+	 public String toString() {
+		 String cardval = "Joker";
+		 String suiteval = "clubs";
+		 if (value>10) {
+			 switch(value) {
+			 	case 11: cardval ="jack";
+			 		break;
+			 	case 12: cardval ="queen";
+			 		break;
+			 	case 13: cardval ="king";
+			 		break;
+			 }
+		 }
+		 else {
+			 cardval=Integer.toString(value);
+		 }
+		 
+		 switch(suite) {
+		 	case 0: suiteval ="hearts";
+		 		break;
+		 	case 1: suiteval ="spades";
+		 		break;
+		 	case 2: suiteval ="diamonds";
+		 		break;
+		 	case 3: suiteval="clubs";
+		 }
+		 
+		 return cardval + " of " + suiteval;
+	 }
+
+}

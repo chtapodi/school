@@ -1,0 +1,65 @@
+/**
+ * Linked List is a collection of data nodes.  All methods here relate to
+ * how one can manipulate those nodes.
+ * 
+ * @author (your name)
+ * @version (a date)
+ */
+public class LinkedList
+{
+    private int length;          // number of nodes
+    private ListNode firstNode;  // pointer to first node
+
+    public LinkedList()
+    {
+        length=0;
+        firstNode=null;
+    }
+
+    /** insert new Event at linked list's head
+     * 
+     * @param newData the Event to be inserted
+     */
+    public void insertAtHead(Event newData)
+    {
+    	ListNode newnode = new ListNode(newData);
+        if (getLength() == 0)
+        {
+            firstNode=newnode;
+        }
+        else
+        {
+            newnode.next=firstNode;
+            firstNode=newnode;
+        }
+        length++;
+    }
+    
+    /** Turn entire chain into a string
+     *  
+     *  @return return linked list as printable string of format (string,\nstring,\nstring)
+     */
+    public String toString() 
+    {
+    	String toReturn="(";
+    	ListNode n;
+    	n=firstNode;
+    	while (n!=null)
+    	{
+    		toReturn = toReturn + n;  //call node's toString automatically
+    		n=n.next;
+    		if (n!=null)
+    		{
+    			toReturn = toReturn + ",\n";
+    		}
+    	}
+    	toReturn = toReturn + ")";
+    	return toReturn;
+    }
+    
+    /** getter for number of nodes in the linked list
+     * 
+     * @return length of LL
+     */
+    public int getLength() {return length;}
+}
