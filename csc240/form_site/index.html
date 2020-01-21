@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {background-color:powderblue;}
+		.center {
+		  margin: auto;
+		  width: 50%;
+		  }
+		input {
+		  border: 1px solid black;
+		  border-radius: 2px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="center">
+		<h1>the <i>form</i></h1>
+		<b>
+		<form action="" method="post" id="data_form">
+			<table>
+				<tr>
+					<td>
+						First<br>
+						<input type="text" name="first" value="first_name">
+					</td>
+					<td>
+						<input type="radio" name="number" value="2" checked> two<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Last<br>
+						<input type="text" name="last" value="last_name">
+					</td>
+					<td>
+						<input type="radio" name="number" value="4">four<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Job<br>
+						<input type="text" name="job" value="Job Title">
+					</td>
+					<td>
+						<input type="radio" name="number" value="8">eight<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Most recent meal<br>
+						<input type="text" name="meal" value="Ham">
+					</td>
+					<td>
+						<input type="radio" name="number" value="16">sixteen<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						color?<br>
+						<select id="color" form="data_form">
+						  <option value="orange">orange</option>
+						  <option value="yellow">yellow</option>
+						  <option value="pink">pink</option>
+						  <option value="cyan">cyan</option>
+						</select>
+					</td>
+					<td>
+						<input type="button" onclick="colorChange()" value="change it all">
+					</td>
+					<br><br>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="Submit">
+					</td>
+					<td>
+						<textarea name="secrets" placeholder="inform me" rows="1" cols="10"></textarea>
+					</td>
+				</tr>
+
+			</table>
+		</form>
+		</b>
+	</div>
+
+	<script>
+	function colorChange() {
+		// var obj = document.getElementById("data_form");
+		var e = document.getElementById("color");
+		document.body.style.backgroundColor = e.options[e.selectedIndex].value;
+	}
+	</script>
+</body>
+
+<!-- <body>
+	<div class="center">
+		<h1>the <i>form</i></h1>
+
+		<form action="" method="post" id="data_form">
+			First<br>
+			<input type="text" name="first" value="first_name">
+			<br>
+			Last<br>
+			<input type="text" name="last" value="last_name">
+			<br>
+			Job<br>
+			<input type="text" name="job" value="Job Title">
+			<br>
+			Most recent meal<br>
+			<input type="text" name="meal" value="Ham">
+			<br>
+			color?<br>
+			<select form="data_form">
+			  <option value="orange">orange</option>
+			  <option value="green">green</option>
+			  <option value="pink">pink</option>
+			  <option value="cyan">cyan</option>
+			</select>
+			<br><br>
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+
+</body> -->
+
+</html>
